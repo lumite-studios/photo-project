@@ -7,6 +7,7 @@ return [
 	],
 
 	'links' => [
+		'all-albums' => 'All Albums',
 		'create-album' => 'Create Album',
 		'create-family' => 'Create a Family',
 		'join-family' => 'Join a Family',

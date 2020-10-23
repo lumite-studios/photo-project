@@ -15,6 +15,12 @@
 				</x-slot>
 			</x-card>
 		@else
+			<!-- options -->
+			<div class="flex justify-end mb-5 px-6 sm:px-0">
+				<a href="/albums"><x-secondary-button class="rounded-r-none">{{ __('dashboard/index.links.all-albums') }}</x-secondary-button></a>
+				<a href="/albums/create"><x-button class="rounded-l-none">{{ __('dashboard/index.links.create-album') }}</x-button></a>
+			</div>
+			<!-- list -->
 			<div class="sm:gap-5 sm:grid sm:grid-cols-4">
 				@foreach($albums as $album)
 					<x-card class="col-span-1" link="{{ route('album.show', ['album_slug' => $album->slug]) }}">
@@ -25,7 +31,8 @@
 							</div>
 						</x-slot>
 						<x-slot name="content">
-							content
+							<h3 class="font-bold text-xl">{{ $album->name }}</h3>
+							<div class="text-gray-500 text-sm">{{ $album->description }}</div>
 						</x-slot>
 					</x-card>
 				@endforeach
@@ -35,8 +42,8 @@
 		<x-card>
 			<x-slot name="content">
 				<div class="text-center">
-					<div class="text-gray-600 text-lg">{{ __('dashboard/index.text.create-family') }}</div>
-					<div class="flex mt-3 justify-center">
+					<div class="mb-3 text-gray-600 text-lg">{{ __('dashboard/index.text.create-family') }}</div>
+					<div class="flex justify-center">
 						<a href="{{ route('family.create') }}">
 							<x-button class="rounded-r-none">{{ __('dashboard/index.links.create-family') }}</x-button>
 						</a>

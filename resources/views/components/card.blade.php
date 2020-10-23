@@ -22,7 +22,7 @@
 		@endif
 	</div>
 @else
-	<a href="{{ $link }}" {{ $attributes->merge(['class' => 'bg-white overflow-hidden shadow text-gray-900 sm:rounded-lg hover:shadow-md']) }}>
+	<a href="{{ $link }}" {{ $attributes->merge(['class' => 'bg-white block overflow-hidden shadow text-gray-900 sm:rounded-lg hover:shadow-md']) }}>
 		{{ $image ?? null }}
 
 		@if($title ?? null)
