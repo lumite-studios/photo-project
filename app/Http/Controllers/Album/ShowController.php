@@ -33,18 +33,12 @@ class ShowController extends Component
 	 * The various display options.
 	 * @var array
 	 */
-	public $options = [
+	public $meta = [
 		'paginate' => [
-			12 => 3,
-			24 => 6,
-		]
+			'value' => 12,
+			'options' => [12, 24, 48],
+		],
 	];
-
-	/**
-	 * The number of rows to show.
-	 * @var integer
-	 */
-	public $rows = 3;
 
 	/**
 	 * The photos within the album.

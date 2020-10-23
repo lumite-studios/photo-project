@@ -23,10 +23,10 @@ class ViewAlbum extends Component
 	public $amount = 4;
 
 	/**
-	 * The number of photos to show per row.
+	 * The number of photos.
 	 * @var integer
 	 */
-	public $rows = 3;
+	public $total = 12;
 
 	/**
 	 * Whether to show the viewing photo modal.
@@ -44,18 +44,18 @@ class ViewAlbum extends Component
 	 * An array of listeners for events.
 	 * @var array
 	 */
-	protected $listeners = ['updateRows'];
+	protected $listeners = ['updatePaginate'];
 
 	/**
 	 * Setup the components required data.
 	 *
 	 * @param Album $album
-	 * @param integer $rows
+	 * @param integer $total
 	 */
-	public function mount(Album $album, int $rows)
+	public function mount(Album $album, int $total)
 	{
 		$this->album = $album;
-		$this->rows = $rows;
+		$this->total = $total;
 	}
 
 	/**
@@ -64,7 +64,7 @@ class ViewAlbum extends Component
 	public function render()
 	{
 		return view('album.partials.view-album', [
-			'photos' => $this->album->photos()->paginate($this->amount * $this->rows),
+			'photos' => $this->album->photos()->paginate($this->total),
 		]);
 	}
 
@@ -88,13 +88,14 @@ class ViewAlbum extends Component
 	}
 
 	/**
-	 * Update the rows.
+	 * Update the pagination.
 	 *
-	 * @param integer $rows
+	 * @param integer $total
 	 */
-	public function updateRows(int $rows)
+	public function updatePaginate(int $total)
 	{
-		$this->rows = $rows;
-		$this->photos = $this->album->photos()->paginate($this->amount * $this->rows);
+		$this->total = $total;
+        $this->resetPage();
+		$this->photos = $this->album->photos()->paginate($this->total);
 	}
 }

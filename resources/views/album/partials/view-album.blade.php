@@ -23,7 +23,7 @@
 	@endif
 
 	@if($photos->hasPages())
-		<div class="mt-5">
+		<div class="mt-5 px-5 sm:px-0">
 			{{ $photos->links() }}
 		</div>
 	@endif

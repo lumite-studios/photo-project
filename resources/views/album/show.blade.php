@@ -1,13 +1,13 @@
 <div>
 	<!-- meta -->
-	<div class="flex items-end mb-5 px-6 sm:px-0">
+	<div class="flex items-end mb-5 px-5 sm:px-0">
 		<!-- sort -->
 		@if($selectedPhotos->count() === 0)
 			<div>
-				<x-label for="rows">Per Page</x-label>
-				<x-select name="rows" wire:model="rows" wire:change="$emit('updateRows', $event.target.value)">
-					@foreach($options['paginate'] as $key => $val)
-						<option value="{{ $val }}">{{ $key }}</option>
+				<x-label for="meta.paginate.value">Per Page</x-label>
+				<x-select name="meta.paginate.value" wire:model="meta.paginate.value" wire:change="$emit('updatePaginate', $event.target.value)">
+					@foreach($meta['paginate']['options'] as $val)
+						<option value="{{ $val }}">{{ $val }}</option>
 					@endforeach
 				</x-select>
 			</div>
@@ -38,7 +38,7 @@
 	@if($editing)
 		@livewire('album.partials.edit-album')
 	@else
-		@livewire('album.partials.view-album', ['album' => $album, 'rows' => $rows])
+		@livewire('album.partials.view-album', ['album' => $album, 'total' => $meta['paginate']['value']])
 	@endif
 
 	<!-- uploading photos modal -->
