@@ -21,7 +21,7 @@ class CreatePhotosTable extends Migration
 			$table->string('description')->nullable();
 			$table->integer('height')->index();
 			$table->integer('width')->index();
-			$table->string('date_taken')->nullable();
+			$table->timestamp('date_taken')->nullable()->index();
             $table->timestamps();
 
 			$table->foreign('album_id')

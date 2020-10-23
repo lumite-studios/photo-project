@@ -139,6 +139,8 @@ class EditPhotoModal extends Component
 		$tag->member()->associate($member);
 		$tag->save();
 
+		$member->touch();
+
 		$this->refreshPhoto();
 		$this->closeNewTag();
 	}

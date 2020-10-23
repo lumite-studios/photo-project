@@ -18,6 +18,12 @@ class IndexController extends Component
 	public $hasFamily;
 
 	/**
+	 * The members within the auth users current family.
+	 * @var array
+	 */
+	public $members = [];
+
+	/**
 	 * Setup the components required data.
 	 */
 	public function mount()
@@ -25,7 +31,8 @@ class IndexController extends Component
 		if(auth()->user()->currentFamily !== null)
 		{
 			$this->hasFamily = true;
-			$this->albums = auth()->user()->currentFamily->albumsWithOptionalUnsorted()->take(4)->get();
+			$this->albums = auth()->user()->currentFamily->albumsWithOptionalUnsorted()->orderBy('updated_at', 'DESC')->take(4)->get();
+			$this->members = auth()->user()->currentFamily->members()->whereHas('tags')->orderBy('updated_at', 'DESC')->take(4)->get();
 		} else
 		{
 			$this->hasFamily = false;

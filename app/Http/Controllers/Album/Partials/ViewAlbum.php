@@ -23,16 +23,16 @@ class ViewAlbum extends Component
 	public $amount;
 
 	/**
-	 * The number of photos.
-	 * @var integer
-	 */
-	public $total;
-
-	/**
 	 * Whether to show the viewing photo modal.
 	 * @var boolean
 	 */
 	public $showViewingPhotoModal = false;
+
+	/**
+	 * The number of photos.
+	 * @var integer
+	 */
+	public $total;
 
 	/**
 	 * The currently selected photo to view.

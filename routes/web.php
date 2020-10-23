@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Dashboard\IndexController as DashboardIndexController;
 use App\Http\Controllers\Family\CreateController as FamilyCreateController;
 use App\Http\Controllers\IndexController;
+use App\Http\Controllers\Member\ShowController as MemberShowController;
 use App\Mail\InviteToFamily;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
@@ -39,15 +40,22 @@ Route::group(['as' => 'auth.', 'middleware' => 'guest'], function() {
 Route::group(['middleware' => 'auth'], function() {
 	// dashboard
 	Route::get('/dashboard', DashboardIndexController::class)->name('dashboard');
-	// families
+	// family
 	Route::group(['as' => 'family.', 'prefix' => 'family'], function() {
 		// create
 		Route::get('/create', FamilyCreateController::class)->name('create');
 	});
-	// albums
+	// album
 	Route::group(['as' => 'album.', 'prefix' => 'album'], function() {
+		Route::get('/', AlbumCreateController::class)->name('index');
 		Route::get('/create', AlbumCreateController::class)->name('create');
 		Route::get('/{album_slug}', AlbumShowController::class)->name('show');
+	});
+	// member
+	Route::group(['as' => 'member.', 'prefix' => 'member'], function() {
+		Route::get('/', AlbumCreateController::class)->name('index');
+		Route::get('/create', AlbumCreateController::class)->name('create');
+		Route::get('/{member_id}', MemberShowController::class)->name('show');
 	});
 });
 
