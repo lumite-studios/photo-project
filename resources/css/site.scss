@@ -1,0 +1,23 @@
+a {
+	@apply text-brand;
+}
+
+button:disabled {
+	@apply cursor-not-allowed;
+}
+
+form {
+	@apply m-0;
+}
+
+img {
+	@apply inline-block;
+}
+
+input[type="checkbox"], input[type="checkbox"] + label {
+	@apply inline-block;
+}
+
+input[type="checkbox"] + label {
+	@apply ml-1;
+}

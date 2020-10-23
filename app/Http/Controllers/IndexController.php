@@ -1,0 +1,16 @@
+<?php
+namespace App\Http\Controllers;
+
+use App\Http\Controllers\Controller;
+
+class IndexController extends Controller
+{
+	public function index()
+	{
+		if(auth()->check())
+		{
+			return redirect()->route('dashboard');
+		}
+		return redirect()->route('auth.login');
+	}
+}
