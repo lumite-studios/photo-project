@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use App\Models\Album;
+use App\Models\Member;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -45,6 +46,16 @@ class Family extends Model
 					->orWhere(function($q) {
 						$q->where('editable', '=', 0)->whereHas('photos');
 					});
+	}
+
+	/**
+	 * Fetch all of the members in this family.
+	 *
+	 * @return array
+	 */
+	public function members()
+	{
+		return $this->hasMany(Member::class);
 	}
 
 	/**

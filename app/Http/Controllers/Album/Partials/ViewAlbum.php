@@ -20,13 +20,13 @@ class ViewAlbum extends Component
 	 * The number of photos to show per row.
 	 * @var integer
 	 */
-	public $amount = 4;
+	public $amount;
 
 	/**
 	 * The number of photos.
 	 * @var integer
 	 */
-	public $total = 12;
+	public $total;
 
 	/**
 	 * Whether to show the viewing photo modal.
@@ -50,11 +50,14 @@ class ViewAlbum extends Component
 	 * Setup the components required data.
 	 *
 	 * @param Album $album
+	 * @param integer $amount
 	 * @param integer $total
 	 */
-	public function mount(Album $album, int $total)
+	public function mount(Album $album, int $amount, int $total)
 	{
+        $this->resetPage();
 		$this->album = $album;
+		$this->amount = $amount;
 		$this->total = $total;
 	}
 

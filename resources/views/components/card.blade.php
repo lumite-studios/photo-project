@@ -16,7 +16,7 @@
 		@endif
 
 		@if($footer ?? null)
-			<div class="bg-gray-100 border-t border-gray-200 flex items-center justify-end px-6 py-3 text-gray-600">
+			<div class="bg-gray-100 border-t border-gray-200 flex items-stretch justify-end px-6 py-3 text-gray-600">
 				{{ $footer ?? '' }}
 			</div>
 		@endif

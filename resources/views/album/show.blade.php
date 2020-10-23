@@ -36,9 +36,9 @@
 
 	<!-- view -->
 	@if($editing)
-		@livewire('album.partials.edit-album')
+		@livewire('album.partials.edit-album', ['album' => $album, 'amount' => $amount, 'total' => $meta['paginate']['value']])
 	@else
-		@livewire('album.partials.view-album', ['album' => $album, 'total' => $meta['paginate']['value']])
+		@livewire('album.partials.view-album', ['album' => $album, 'amount' => $amount, 'total' => $meta['paginate']['value']])
 	@endif
 
 	<!-- uploading photos modal -->

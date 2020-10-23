@@ -18,6 +18,12 @@ class ShowController extends Component
 	public $album;
 
 	/**
+	 * The number of items to show per row.
+	 * @var integer
+	 */
+	public $amount = 4;
+
+	/**
 	 * Whether the album can have photos uploaded.
 	 * @var boolean
 	 */
@@ -27,7 +33,7 @@ class ShowController extends Component
 	 * Whether the album is being edited.
 	 * @var boolean
 	 */
-	public $editing = false;
+	public $editing = true;
 
 	/**
 	 * The various display options.

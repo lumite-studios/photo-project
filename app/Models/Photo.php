@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Album;
+use App\Models\Tag;
 use App\Traits\HasPhoto;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -53,5 +54,15 @@ class Photo extends Model
 	public function album()
 	{
 		return $this->belongsTo(Album::class);
+	}
+
+	/**
+	 * Fetch all of the tags this photo has.
+	 *
+	 * @return array
+	 */
+	public function tags()
+	{
+		return $this->hasMany(Tag::class);
 	}
 }

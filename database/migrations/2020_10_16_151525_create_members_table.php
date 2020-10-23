@@ -15,8 +15,14 @@ class CreateMembersTable extends Migration
     {
         Schema::create('members', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('family_id')->unsigned();
             $table->string('name');
             $table->timestamps();
+
+			$table->foreign('family_id')
+                ->references('id')
+                ->on('families')
+                ->onDelete('cascade');
         });
     }
 
