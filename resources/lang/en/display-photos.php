@@ -8,6 +8,10 @@ return [
 		],
 		'title' => 'Group',
 	],
+	'select' => [
+		'select' => 'Select All',
+		'unselect' => 'Unselect All',
+	],
 	'selected' => [
 		'options' => [
 			'delete' => 'Delete',
@@ -23,4 +27,6 @@ return [
 		],
 		'title' => 'Sort',
 	],
+
+	'load-more' => 'Load More',
 ];

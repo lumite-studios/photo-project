@@ -19,5 +19,5 @@ input[type="checkbox"], input[type="checkbox"] + label {
 }
 
 input[type="checkbox"] + label {
-	@apply ml-1;
+	@apply leading-none ml-1;
 }

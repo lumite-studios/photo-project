@@ -3,19 +3,19 @@
 	<div class="flex mb-5 space-x-5">
 		<!-- sort -->
 		<div>
-			<x-label for="sort">{{ __('member/show.text.meta.sort.title') }}</x-label>
+			<x-label for="sort">{{ __('display-photos.sort.title') }}</x-label>
 			<x-select name="sort" wire:model="meta.sort.value">
 				@foreach($meta['sort']['options'] as $key => $value)
-					<option value="{{ $key }}">{{ __('member/show.text.meta.sort.options.'.$value) }}</option>
+					<option value="{{ $key }}">{{ __('display-photos.sort.options.'.$value) }}</option>
 				@endforeach
 			</x-select>
 		</div>
 		<!-- group -->
 		<div>
-			<x-label for="group">{{ __('member/show.text.meta.group.title') }}</x-label>
+			<x-label for="group">{{ __('display-photos.group.title') }}</x-label>
 			<x-select name="group" wire:model="meta.group.value">
 				@foreach($meta['group']['options'] as $value)
-					<option value="{{ $value }}">{{ __('member/show.text.meta.group.options.'.$value) }}</option>
+					<option value="{{ $value }}">{{ __('display-photos.group.options.'.$value) }}</option>
 				@endforeach
 			</x-select>
 		</div>
@@ -48,7 +48,7 @@
 	@if($this->canLoadMore)
 		<x-secondary-button class="justify-center mt-5 text-base w-full" wire:click="loadMorePhotos" wire:target="loadMorePhotos" wire:loading.attr="disabled">
 			<span wire:loading wire:target="loadMorePhotos"><em class="fas fa-circle-notch fa-spin"></em></span>
-			<span wire:loading.remove wire:target="loadMorePhotos">{{ __('member/show.links.load-more') }}</span>
+			<span wire:loading.remove wire:target="loadMorePhotos">{{ __('display-photos.load-more') }}</span>
 		</x-secondary-button>
 	@endif
 

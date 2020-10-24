@@ -186,6 +186,19 @@ class EditPhotoModal extends Component
 	}
 
 	/**
+	 * Stop editing a photo.
+	 *
+	 * @param Photo $photo
+	 */
+	public function stopEditingPhoto()
+	{
+		$this->showEditingPhotoModal = false;
+		$this->photo = null;
+
+		$this->state = [];
+	}
+
+	/**
 	 * Refresh the photo.
 	 */
 	public function refreshPhoto()

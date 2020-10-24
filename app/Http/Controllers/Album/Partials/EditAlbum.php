@@ -55,19 +55,74 @@ class EditAlbum extends Component
         return view('album.partials.edit-album');
 	}
 
-	public function togglePhoto(Photo $photo)
+	/**
+	 * Toggle a photo.
+	 *
+	 * @param Photo $photo
+	 * @param boolean $checked
+	 */
+	public function togglePhoto(Photo $photo, bool $checked = null)
 	{
-		if($this->selectedPhotos->contains('id', $photo->id))
+		if($checked === null)
 		{
-			$this->selectedPhotos = $this->selectedPhotos->filter(function($value) use($photo)
+			if($this->selectedPhotos->contains('id', $photo->id))
 			{
-				return $value['id'] !== $photo->id;
-			});
+				$this->removePhoto($photo);
+			} else
+			{
+				$this->addPhoto($photo);
+			}
 		} else
 		{
-			$this->selectedPhotos->push($photo);
+			if($checked)
+			{
+				if(!$this->selectedPhotos->contains('id', $photo->id))
+				{
+					$this->addPhoto($photo);
+				}
+			} else
+			{
+				if($this->selectedPhotos->contains('id', $photo->id))
+				{
+					$this->removePhoto($photo);
+				}
+			}
 		}
 
 		$this->emitUp('updateSelectedPhotos', $this->selectedPhotos);
+	}
+
+	/**
+	 * Add a photo.
+	 *
+	 * @param Photo $photo
+	 */
+	private function addPhoto(Photo $photo)
+	{
+		$this->selectedPhotos->push($photo);
+	}
+
+	/**
+	 * Remove a photo.
+	 *
+	 * @param Photo $photo
+	 */
+	private function removePhoto(Photo $photo)
+	{
+		$this->selectedPhotos = $this->selectedPhotos->filter(function($value) use($photo)
+		{
+			return $value['id'] !== $photo->id;
+		});
+	}
+
+	/**
+	 * Toggle all of the photos.
+	 */
+	public function toggleAll(bool $checked)
+	{
+		foreach($this->_photos as $photo)
+		{
+			$this->togglePhoto($photo, $checked);
+		}
 	}
 }

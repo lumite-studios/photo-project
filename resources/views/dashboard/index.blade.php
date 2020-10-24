@@ -17,8 +17,8 @@
 		@else
 			<!-- options -->
 			<div class="flex justify-end mb-5 px-6 sm:px-0">
-				<a href="{{ route('album.index') }}"><x-secondary-button class="rounded-r-none">{{ __('dashboard/index.links.all-albums') }}</x-secondary-button></a>
-				<a href="{{ route('album.create') }}"><x-button class="rounded-l-none">{{ __('dashboard/index.links.create-album') }}</x-button></a>
+				<a href="{{ route('album.index') }}"><x-secondary-button class="rounded-r-none">{{ __('album/index.title') }}</x-secondary-button></a>
+				<a href="{{ route('album.create') }}"><x-button class="rounded-l-none">{{ __('album/create.title') }}</x-button></a>
 			</div>
 			<!-- list -->
 			<div class="gap-5 grid grid-cols-2 md:grid-cols-4">
@@ -59,8 +59,8 @@
 		@else
 			<!-- options -->
 			<div class="flex justify-end mb-5 px-6 sm:px-0">
-				<a href="{{ route('member.index') }}"><x-secondary-button class="rounded-r-none">{{ __('dashboard/index.links.all-members') }}</x-secondary-button></a>
-				<a href="{{ route('member.create') }}"><x-button class="rounded-l-none">{{ __('dashboard/index.links.create-member') }}</x-button></a>
+				<a href="{{ route('member.index') }}"><x-secondary-button class="rounded-r-none">{{ __('member/index.title') }}</x-secondary-button></a>
+				<a href="{{ route('member.create') }}"><x-button class="rounded-l-none">{{ __('member/index.create') }}</x-button></a>
 			</div>
 			<!-- list -->
 			<div class="gap-5 grid grid-cols-2 md:grid-cols-4">
@@ -89,7 +89,7 @@
 					<div class="mb-3 text-gray-600 text-lg">{{ __('dashboard/index.text.create-family') }}</div>
 					<div class="flex justify-center">
 						<a href="{{ route('family.create') }}">
-							<x-button class="rounded-r-none">{{ __('dashboard/index.links.create-family') }}</x-button>
+							<x-button class="rounded-r-none">{{ __('family/create.title') }}</x-button>
 						</a>
 						<x-secondary-button class="rounded-l-none">{{ __('dashboard/index.links.join-family') }}</x-secondary-button>
 					</div>

@@ -7,11 +7,6 @@ return [
 	],
 
 	'links' => [
-		'all-albums' => 'All Albums',
-		'all-members' => 'All Members',
-		'create-album' => 'Create Album',
-		'create-family' => 'Create a Family',
-		'create-member' => 'Create Member',
 		'join-family' => 'Join a Family',
 	],
 

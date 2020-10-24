@@ -16,7 +16,7 @@
 	@else
 		<!-- options -->
 		<div class="flex justify-end mb-5 px-6 sm:px-0">
-			<a href="{{ route('album.create') }}"><x-button>{{ __('dashboard/index.links.create-album') }}</x-button></a>
+			<a href="{{ route('album.create') }}"><x-button>{{ __('album/create.title') }}</x-button></a>
 		</div>
 		<!-- list -->
 		<div class="gap-5 grid grid-cols-2 md:grid-cols-4">
