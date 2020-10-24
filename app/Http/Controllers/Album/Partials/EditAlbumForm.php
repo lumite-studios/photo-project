@@ -57,6 +57,9 @@ class EditAlbumForm extends Component
 			$photo->album()->associate($unsorted);
 			$photo->save();
 		}
+
+		Album::where('id', '=', $this->album->id)->first()->delete();
+		return redirect()->route('album.index');
 	}
 
 	/**
