@@ -3,11 +3,14 @@ namespace App\Http\Controllers\Album\Partials;
 
 use App\Models\Album;
 use App\Models\Photo;
+use App\Traits\DisplayPhotos;
+use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class ViewAlbum extends Component
 {
+	use DisplayPhotos;
 	use WithPagination;
 
 	/**
@@ -17,22 +20,10 @@ class ViewAlbum extends Component
 	public $album;
 
 	/**
-	 * The number of photos to show per row.
-	 * @var integer
-	 */
-	public $amount;
-
-	/**
 	 * Whether to show the viewing photo modal.
 	 * @var boolean
 	 */
 	public $showViewingPhotoModal = false;
-
-	/**
-	 * The number of photos.
-	 * @var integer
-	 */
-	public $total;
 
 	/**
 	 * The currently selected photo to view.
@@ -44,21 +35,19 @@ class ViewAlbum extends Component
 	 * An array of listeners for events.
 	 * @var array
 	 */
-	protected $listeners = ['updatePaginate'];
+	protected $listeners = ['updateMeta'];
 
 	/**
 	 * Setup the components required data.
 	 *
 	 * @param Album $album
 	 * @param integer $amount
-	 * @param integer $total
 	 */
-	public function mount(Album $album, int $amount, int $total)
+	public function mount(Album $album)
 	{
         $this->resetPage();
-		$this->album = $album;
-		$this->amount = $amount;
-		$this->total = $total;
+		$this->album = $this->model = $album;
+		$this->total = $this->album->photos->count();
 	}
 
 	/**
@@ -66,9 +55,7 @@ class ViewAlbum extends Component
 	 */
 	public function render()
 	{
-		return view('album.partials.view-album', [
-			'photos' => $this->album->photos()->paginate($this->total),
-		]);
+		return view('album.partials.view-album');
 	}
 
 	/**
@@ -88,17 +75,5 @@ class ViewAlbum extends Component
 	{
 		$this->viewPhoto = $photo;
 		$this->showViewingPhotoModal = true;
-	}
-
-	/**
-	 * Update the pagination.
-	 *
-	 * @param integer $total
-	 */
-	public function updatePaginate(int $total)
-	{
-		$this->total = $total;
-        $this->resetPage();
-		$this->photos = $this->album->photos()->paginate($this->total);
 	}
 }

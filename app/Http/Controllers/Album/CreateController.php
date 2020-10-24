@@ -76,6 +76,6 @@ class CreateController extends Component
 				: $this->state['cover_photo']->storePubliclyAs($album->slug, $photoSlug);
 		}
 
-        return redirect('/albums/'.$album->slug);
+        return redirect()->route('album.show', ['album_slug' => $album->slug]);
 	}
 }

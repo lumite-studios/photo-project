@@ -56,6 +56,16 @@ trait Families
 	}
 
 	/**
+	 * Check if the user has a family.
+	 *
+	 * @return boolean
+	 */
+	public function hasFamily()
+	{
+		return $this->currentFamily !== null;
+	}
+
+	/**
 	 * Switch the user's current family.
 	 *
 	 * @param Family $family

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Album\CreateController as AlbumCreateController;
+use App\Http\Controllers\Album\IndexController as AlbumIndexController;
 use App\Http\Controllers\Album\ShowController as AlbumShowController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -47,7 +48,7 @@ Route::group(['middleware' => 'auth'], function() {
 	});
 	// album
 	Route::group(['as' => 'album.', 'prefix' => 'album'], function() {
-		Route::get('/', AlbumCreateController::class)->name('index');
+		Route::get('/', AlbumIndexController::class)->name('index');
 		Route::get('/create', AlbumCreateController::class)->name('create');
 		Route::get('/{album_slug}', AlbumShowController::class)->name('show');
 	});

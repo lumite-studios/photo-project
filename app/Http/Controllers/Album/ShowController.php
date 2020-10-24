@@ -33,16 +33,20 @@ class ShowController extends Component
 	 * Whether the album is being edited.
 	 * @var boolean
 	 */
-	public $editing = true;
+	public $editing = false;
 
 	/**
 	 * The various display options.
 	 * @var array
 	 */
 	public $meta = [
-		'paginate' => [
-			'value' => 12,
-			'options' => [12, 24, 48],
+		'group' => [
+			'value' => 'month',
+			'options' => ['year', 'month', 'day'],
+		],
+		'sort' => [
+			'value' => '>',
+			'options' => ['>' => 'newest', '<' => 'oldest']
 		],
 	];
 

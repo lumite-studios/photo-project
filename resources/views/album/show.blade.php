@@ -1,13 +1,22 @@
 <div>
 	<!-- meta -->
-	<div class="flex items-end mb-5 px-5 sm:px-0">
-		<!-- sort -->
+	<div class="sm:flex items-end mb-5 px-5 sm:px-0">
 		@if($selectedPhotos->count() === 0)
+			<!-- sort -->
+			<div class="sm:mr-3">
+				<x-label for="sort">{{ __('member/show.text.meta.sort.title') }}</x-label>
+				<x-select name="sort" wire:model="meta.sort.value" wire:change="$emit('updateMeta', 'sort', $event.target.value)">
+					@foreach($meta['sort']['options'] as $key => $value)
+						<option value="{{ $key }}">{{ __('member/show.text.meta.sort.options.'.$value) }}</option>
+					@endforeach
+				</x-select>
+			</div>
+			<!-- group -->
 			<div>
-				<x-label for="meta.paginate.value">Per Page</x-label>
-				<x-select name="meta.paginate.value" wire:model="meta.paginate.value" wire:change="$emit('updatePaginate', $event.target.value)">
-					@foreach($meta['paginate']['options'] as $val)
-						<option value="{{ $val }}">{{ $val }}</option>
+				<x-label for="group">{{ __('member/show.text.meta.group.title') }}</x-label>
+				<x-select name="group" wire:model="meta.group.value" wire:change="$emit('updateMeta', 'group', $event.target.value)">
+					@foreach($meta['group']['options'] as $value)
+						<option value="{{ $value }}">{{ __('member/show.text.meta.group.options.'.$value) }}</option>
 					@endforeach
 				</x-select>
 			</div>
@@ -36,9 +45,9 @@
 
 	<!-- view -->
 	@if($editing)
-		@livewire('album.partials.edit-album', ['album' => $album, 'amount' => $amount, 'total' => $meta['paginate']['value']])
+		@livewire('album.partials.edit-album', ['album' => $album, 'amount' => $amount])
 	@else
-		@livewire('album.partials.view-album', ['album' => $album, 'amount' => $amount, 'total' => $meta['paginate']['value']])
+		@livewire('album.partials.view-album', ['album' => $album, 'amount' => $amount])
 	@endif
 
 	<!-- uploading photos modal -->

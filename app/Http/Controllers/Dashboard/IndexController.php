@@ -28,7 +28,7 @@ class IndexController extends Component
 	 */
 	public function mount()
 	{
-		if(auth()->user()->currentFamily !== null)
+		if(auth()->user()->hasFamily())
 		{
 			$this->hasFamily = true;
 			$this->albums = auth()->user()->currentFamily->albumsWithOptionalUnsorted()->orderBy('updated_at', 'DESC')->take(4)->get();

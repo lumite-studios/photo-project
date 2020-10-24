@@ -17,11 +17,11 @@
 		@else
 			<!-- options -->
 			<div class="flex justify-end mb-5 px-6 sm:px-0">
-				<a href="/albums"><x-secondary-button class="rounded-r-none">{{ __('dashboard/index.links.all-albums') }}</x-secondary-button></a>
-				<a href="/albums/create"><x-button class="rounded-l-none">{{ __('dashboard/index.links.create-album') }}</x-button></a>
+				<a href="{{ route('album.index') }}"><x-secondary-button class="rounded-r-none">{{ __('dashboard/index.links.all-albums') }}</x-secondary-button></a>
+				<a href="{{ route('album.create') }}"><x-button class="rounded-l-none">{{ __('dashboard/index.links.create-album') }}</x-button></a>
 			</div>
 			<!-- list -->
-			<div class="sm:gap-5 sm:grid sm:grid-cols-4">
+			<div class="gap-5 grid grid-cols-2 md:grid-cols-4">
 				@foreach($albums as $album)
 					<x-card class="col-span-1" link="{{ route('album.show', ['album_slug' => $album->slug]) }}">
 						<x-slot name="image">
@@ -31,7 +31,10 @@
 							</div>
 						</x-slot>
 						<x-slot name="content">
-							<h3 class="font-bold text-xl">{{ $album->name }}</h3>
+							<h3 class="flex items-center">
+								<div class="flex-grow font-bold text-xl">{{ $album->name }}</div>
+								<div>{{ $album->photos->count() }}</div>
+							</h3>
 							<div class="text-gray-500 text-sm">{{ $album->description }}</div>
 						</x-slot>
 					</x-card>
@@ -60,7 +63,7 @@
 				<a href="{{ route('member.create') }}"><x-button class="rounded-l-none">{{ __('dashboard/index.links.create-member') }}</x-button></a>
 			</div>
 			<!-- list -->
-			<div class="sm:gap-5 sm:grid sm:grid-cols-4">
+			<div class="gap-5 grid grid-cols-2 md:grid-cols-4">
 				@foreach($members as $member)
 					<x-card class="col-span-1" link="{{ route('member.show', ['member_id' => $member->id]) }}">
 						<x-slot name="image">
@@ -70,10 +73,10 @@
 							</div>
 						</x-slot>
 						<x-slot name="content">
-							<h3 class="font-bold text-xl">{{ $member->name }}</h3>
-							<div class="text-gray-500 text-sm">
-								<div><strong>{{ __('dashboard/index.text.total-photos') }}:</strong> {{ $member->tags->count() }}</div>
-							</div>
+							<h3 class="flex items-center">
+								<div class="flex-grow font-bold text-xl">{{ $member->name }}</div>
+								<div>{{ $member->photos->count() }}</div>
+							</h3>
 						</x-slot>
 					</x-card>
 				@endforeach
