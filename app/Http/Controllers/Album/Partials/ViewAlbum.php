@@ -4,14 +4,11 @@ namespace App\Http\Controllers\Album\Partials;
 use App\Models\Album;
 use App\Models\Photo;
 use App\Traits\DisplayPhotos;
-use Carbon\Carbon;
 use Livewire\Component;
-use Livewire\WithPagination;
 
 class ViewAlbum extends Component
 {
 	use DisplayPhotos;
-	use WithPagination;
 
 	/**
 	 * The current album.
@@ -45,7 +42,6 @@ class ViewAlbum extends Component
 	 */
 	public function mount(Album $album)
 	{
-        $this->resetPage();
 		$this->album = $this->model = $album;
 		$this->total = $this->album->photos->count();
 	}

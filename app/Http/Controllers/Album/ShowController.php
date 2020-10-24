@@ -1,27 +1,21 @@
 <?php
 namespace App\Http\Controllers\Album;
 
+use App\Traits\DisplayPhotosOptions;
 use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Livewire\WithPagination;
 
 class ShowController extends Component
 {
+	use DisplayPhotosOptions;
 	use WithFileUploads;
-	use WithPagination;
 
 	/**
 	 * The current album.
 	 * @var Album
 	 */
 	public $album;
-
-	/**
-	 * The number of items to show per row.
-	 * @var integer
-	 */
-	public $amount = 4;
 
 	/**
 	 * Whether the album can have photos uploaded.
@@ -33,28 +27,7 @@ class ShowController extends Component
 	 * Whether the album is being edited.
 	 * @var boolean
 	 */
-	public $editing = false;
-
-	/**
-	 * The various display options.
-	 * @var array
-	 */
-	public $meta = [
-		'group' => [
-			'value' => 'month',
-			'options' => ['year', 'month', 'day'],
-		],
-		'sort' => [
-			'value' => '>',
-			'options' => ['>' => 'newest', '<' => 'oldest']
-		],
-	];
-
-	/**
-	 * The photos within the album.
-	 * @var Collection
-	 */
-	public $photos;
+	public $editing = true;
 
 	/**
 	 * The selected photos that exist in the album.
@@ -80,7 +53,7 @@ class ShowController extends Component
 	 * An array of listeners for events.
 	 * @var array
 	 */
-	protected $listeners = ['toggleUploadingPhotosModal'];
+	protected $listeners = ['toggleUploadingPhotosModal', 'updateSelectedPhotos'];
 
 	/**
 	 * Setup the components required data.
@@ -111,6 +84,7 @@ class ShowController extends Component
 	 */
 	public function toggleEditing()
 	{
+		$this->selectedPhotos = collect();
 		$this->editing = !$this->editing;
 	}
 
@@ -164,5 +138,15 @@ class ShowController extends Component
 		$this->showUploadingPhotosModal = false;
 		$this->state['photos'] = [];
 		$this->emit('refreshAlbum');
+	}
+
+	/**
+	 * Update the selected photos.
+	 *
+	 * @param array $selectedPhotos
+	 */
+	public function updateSelectedPhotos($selectedPhotos)
+	{
+		$this->selectedPhotos = collect($selectedPhotos);
 	}
 }

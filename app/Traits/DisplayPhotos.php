@@ -1,10 +1,13 @@
 <?php
 namespace App\Traits;
 
+use App\Traits\DisplayPhotosOptions;
 use Carbon\Carbon;
 
 trait DisplayPhotos
 {
+	use DisplayPhotosOptions;
+
 	/**
 	 * The current count of photos.
 	 * @var integer
@@ -28,21 +31,6 @@ trait DisplayPhotos
 	 * @var integer
 	 */
 	private $months = 3;
-
-	/**
-	 * The various display options.
-	 * @var array
-	 */
-	public $meta = [
-		'group' => [
-			'value' => 'month',
-			'options' => ['year', 'month', 'day'],
-		],
-		'sort' => [
-			'value' => '>',
-			'options' => ['>' => 'newest', '<' => 'oldest']
-		],
-	];
 
 	/**
 	 * The photos that have been loaded, ungrouped.

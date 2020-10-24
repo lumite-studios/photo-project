@@ -2,24 +2,19 @@
 namespace App\Http\Controllers\Album\Partials;
 
 use App\Models\Album;
+use App\Models\Photo;
+use App\Traits\DisplayPhotos;
 use Livewire\Component;
-use Livewire\WithPagination;
 
 class EditAlbum extends Component
 {
-	use WithPagination;
+	use DisplayPhotos;
 
 	/**
 	 * The current album.
 	 * @var Album
 	 */
 	public $album;
-
-	/**
-	 * The number of photos to show per row.
-	 * @var integer
-	 */
-	public $amount;
 
 	/**
 	 * Whether the album can be edited.
@@ -34,32 +29,22 @@ class EditAlbum extends Component
 	public $selectedPhotos;
 
 	/**
-	 * The number of photos.
-	 * @var integer
-	 */
-	public $total;
-
-	/**
 	 * An array of listeners for events.
 	 * @var array
 	 */
-	protected $listeners = ['updatePaginate'];
+	protected $listeners = ['updateMeta'];
 
 	/**
 	 * Setup the components required data.
 	 *
 	 * @param Album $album
-	 * @param integer $amount
-	 * @param integer $total
 	 */
-	public function mount(Album $album, int $amount, int $total)
+	public function mount(Album $album)
 	{
-        $this->resetPage();
-		$this->album = $album;
-		$this->amount = $amount;
-		$this->total = $total;
+		$this->album = $this->model = $album;
 		$this->canEdit = $this->album->editable;
 		$this->selectedPhotos = collect();
+		$this->total = $this->album->photos->count();
 	}
 
 	/**
@@ -67,20 +52,22 @@ class EditAlbum extends Component
 	 */
     public function render()
     {
-        return view('album.partials.edit-album', [
-			'photos' => $this->album->photos()->paginate($this->total),
-		]);
+        return view('album.partials.edit-album');
 	}
 
-	/**
-	 * Update the pagination.
-	 *
-	 * @param integer $total
-	 */
-	public function updatePaginate(int $total)
+	public function togglePhoto(Photo $photo)
 	{
-		$this->total = $total;
-        $this->resetPage();
-		$this->photos = $this->album->photos()->paginate($this->total);
+		if($this->selectedPhotos->contains('id', $photo->id))
+		{
+			$this->selectedPhotos = $this->selectedPhotos->filter(function($value) use($photo)
+			{
+				return $value['id'] !== $photo->id;
+			});
+		} else
+		{
+			$this->selectedPhotos->push($photo);
+		}
+
+		$this->emitUp('updateSelectedPhotos', $this->selectedPhotos);
 	}
 }

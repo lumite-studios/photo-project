@@ -1,29 +1,40 @@
 <div>
 	<!-- meta -->
 	<div class="sm:flex items-end mb-5 px-5 sm:px-0">
-		@if($selectedPhotos->count() === 0)
+		<div class="flex items-center space-x-2">
 			<!-- sort -->
-			<div class="sm:mr-3">
-				<x-label for="sort">{{ __('member/show.text.meta.sort.title') }}</x-label>
+			<div>
+				<x-label for="sort">{{ __('display-photos.sort.title') }}</x-label>
 				<x-select name="sort" wire:model="meta.sort.value" wire:change="$emit('updateMeta', 'sort', $event.target.value)">
 					@foreach($meta['sort']['options'] as $key => $value)
-						<option value="{{ $key }}">{{ __('member/show.text.meta.sort.options.'.$value) }}</option>
+						<option value="{{ $key }}">{{ __('display-photos.sort.options.'.$value) }}</option>
 					@endforeach
 				</x-select>
 			</div>
 			<!-- group -->
 			<div>
-				<x-label for="group">{{ __('member/show.text.meta.group.title') }}</x-label>
+				<x-label for="group">{{ __('display-photos.group.title') }}</x-label>
 				<x-select name="group" wire:model="meta.group.value" wire:change="$emit('updateMeta', 'group', $event.target.value)">
 					@foreach($meta['group']['options'] as $value)
-						<option value="{{ $value }}">{{ __('member/show.text.meta.group.options.'.$value) }}</option>
+						<option value="{{ $value }}">{{ __('display-photos.group.options.'.$value) }}</option>
 					@endforeach
 				</x-select>
 			</div>
-		@else
-		<!-- selected -->
-			selected
-		@endif
+			<!-- selected -->
+			@if($selectedPhotos->count() > 0)
+				<div>
+					<x-label>{{ $selectedPhotos->count() }} <span class="font-normal">{{ __('display-photos.selected.title') }}</span></x-label>
+					<div class="flex">
+						<x-select class="flex-grow rounded-r-none">
+							@foreach($meta['selected']['options'] as $value)
+								<option value="{{ $value }}" @if($value === 'none') disabled selected @endif>{{ __('display-photos.selected.options.'.$value) }}</option>
+							@endforeach
+						</x-select>
+						<x-button class="rounded-l-none"><em class="fas fa-check"></em></x-button>
+					</div>
+				</div>
+			@endif
+		</div>
 		<div class="flex-grow"></div>
 		<!-- options -->
 		<x-secondary-button class="{{ $canUpload ? 'rounded-r-none' : null }}" wire:click="toggleEditing" wire:target="toggleEditing" wire:loading.attr="disabled">
@@ -45,9 +56,9 @@
 
 	<!-- view -->
 	@if($editing)
-		@livewire('album.partials.edit-album', ['album' => $album, 'amount' => $amount])
+		@livewire('album.partials.edit-album', ['album' => $album])
 	@else
-		@livewire('album.partials.view-album', ['album' => $album, 'amount' => $amount])
+		@livewire('album.partials.view-album', ['album' => $album])
 	@endif
 
 	<!-- uploading photos modal -->
