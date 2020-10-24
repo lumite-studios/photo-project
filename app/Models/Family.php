@@ -48,6 +48,12 @@ class Family extends Model
 					});
 	}
 
+	public function albumsWithoutUnsorted()
+	{
+		return $this->hasMany(Album::class)
+					->where('editable', '=', 1);
+	}
+
 	/**
 	 * Fetch all of the members in this family.
 	 *

@@ -2,10 +2,12 @@
 	@livewire('album.partials.edit-photo-modal')
 
 	<div class="flex">
-		<div>
-			<input type="checkbox" wire:change="toggleAll($event.target.checked)" />
-			<x-label>{{ __('display-photos.select.select') }}</x-select>
-		</div>
+		@if($this->hasPhotos)
+			<div>
+				<input type="checkbox" wire:change="toggleAll($event.target.checked)" />
+				<x-label>{{ __('display-photos.select.select') }}</x-select>
+			</div>
+		@endif
 		<div class="flex-grow"></div>
 		@if($canEdit)
 			<a href="#edit-album-form">{{ __('album/show.links.jump-to') }}</a>
@@ -47,7 +49,7 @@
 		</div>
 	@endif
 
-	@if($count < $total)
+	@if($this->canLoadMore)
 		<x-secondary-button class="justify-center mt-5 text-base w-full" wire:click="loadMorePhotos" wire:target="loadMorePhotos" wire:loading.attr="disabled">
 			<span wire:loading wire:target="loadMorePhotos"><em class="fas fa-circle-notch fa-spin"></em></span>
 			<span wire:loading.remove wire:target="loadMorePhotos">{{ __('display-photos.load-more') }}</span>

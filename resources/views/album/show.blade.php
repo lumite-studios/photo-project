@@ -24,13 +24,42 @@
 			@if($selectedPhotos->count() > 0)
 				<div>
 					<x-label>{{ $selectedPhotos->count() }} <span class="font-normal">{{ __('display-photos.selected.title') }}</span></x-label>
-					<div class="flex">
-						<x-select class="flex-grow rounded-r-none">
+					<div class="flex w-56">
+						<x-select class="flex-grow rounded-r-none" wire:model="meta.selected.value">
 							@foreach($meta['selected']['options'] as $value)
 								<option value="{{ $value }}" @if($value === 'none') disabled selected @endif>{{ __('display-photos.selected.options.'.$value) }}</option>
 							@endforeach
 						</x-select>
-						<x-button class="rounded-l-none"><em class="fas fa-check"></em></x-button>
+						<x-dropdown align="right" contentClasses="-mt-1 rounded-t-none" width="56">
+							<x-slot name="trigger">
+								<x-button class="h-full rounded-l-none"><em class="fas fa-check"></em></x-button>
+							</x-slot>
+							<x-slot name="content">
+								@switch($meta['selected']['value'])
+									@case('none')
+										<div class="text-center text-gray-500 text-sm">
+											{{ __('No Option Selected') }}
+										</div>
+										@break
+									@case('move')
+										@if(count($availableAlbums) === 0)
+											<x-dropdown-link>No Albums</x-dropdown-link>
+										@else
+											@foreach($availableAlbums as $_album)
+												<x-dropdown-link wire:click="moveSelectedPhotos({{ $_album }})">{{ $_album->name }}</x-dropdown-link>
+											@endforeach
+										@endif
+										@break
+									@case('delete')
+										<div class="px-4 py-2">
+											<x-danger-button class="justify-center w-full" wire:click="deleteSelectedPhotos">
+												Delete Photos
+											</x-danger-button>
+										</div>
+										@break
+								@endswitch
+							</x-slot>
+						</x-dropdown>
 					</div>
 				</div>
 			@endif

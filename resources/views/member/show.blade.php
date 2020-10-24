@@ -1,6 +1,6 @@
 <div>
 	<!-- meta -->
-	<div class="flex mb-5 space-x-5">
+	<div class="flex mb-5 space-x-2">
 		<!-- sort -->
 		<div>
 			<x-label for="sort">{{ __('display-photos.sort.title') }}</x-label>
@@ -22,8 +22,20 @@
 		<div class="flex-grow"></div>
 	</div>
 
+	@if($this->hasPhotos)
+		<div class="flex justify-end">
+			<a href="#edit-member-form">{{ __('member/show.links.jump-to') }}</a>
+		</div>
+	@endif
+
 	<!-- list -->
-	@if($this->photos->count() > 0)
+	@if(!$this->hasPhotos)
+		<x-card class="text-center">
+			<x-slot name="content">
+				<div class="text-gray-600 text-lg">{{ __('member/show.text.no-photos') }}</div>
+			</x-slot>
+		</x-card>
+	@else
 		<div class="flex flex-col space-y-5">
 			@foreach($this->photos as $date => $group)
 				<div>
@@ -51,6 +63,11 @@
 			<span wire:loading.remove wire:target="loadMorePhotos">{{ __('display-photos.load-more') }}</span>
 		</x-secondary-button>
 	@endif
+
+	<hr class="my-10" />
+	<div id="edit-member-form">
+		@livewire('member.partials.edit-member-form', ['member' => $member])
+	</div>
 
 	<!-- viewing photo modal -->
 	<x-dialog-modal wire:model="showViewingPhotoModal">

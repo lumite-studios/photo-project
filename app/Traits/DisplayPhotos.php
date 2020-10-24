@@ -36,7 +36,7 @@ trait DisplayPhotos
 	 * The photos that have been loaded, ungrouped.
 	 * @var Collection
 	 */
-	public $_photos;
+	public $_photos = [];
 
 	/**
 	 * The total number of photos.
@@ -49,7 +49,7 @@ trait DisplayPhotos
 	 */
 	public function getCanLoadMoreProperty()
 	{
-		return $this->count < $this->total;
+		return count($this->_photos) < $this->total;
 	}
 
 	/**
@@ -94,51 +94,11 @@ trait DisplayPhotos
 	}
 
 	/**
-	 * Get the sort direction.
-	 *
-	 * @param boolean $reverse
+	 * Check if there are photos.
 	 */
-	private function getSort(bool $reverse = false)
+	public function getHasPhotosProperty()
 	{
-		if($reverse)
-		{
-			return $this->meta['sort']['value'] === '>' ? '<' : '>';
-		}
-		return $this->meta['sort']['value'];
-	}
-
-	/**
-	 * Get the order using the sort.
-	 *
-	 * @param string $sort
-	 */
-	private function getOrder(string $sort)
-	{
-		return $sort === '<' ? 'ASC' : 'DESC';
-	}
-
-	/**
-	 * Get the group.
-	 */
-	private function getGroup()
-	{
-		return ['year' => 'Y', 'month' => 'F Y', 'day' => 'jS F Y'][$this->meta['group']['value']];
-	}
-
-	/**
-	 * Get the last loaded photo.
-	 */
-	private function getLastLoadedPhoto()
-	{
-		$sort = $this->getSort(false);
-		$order = $this->getOrder($sort);
-
-		if($this->last !== null)
-		{
-			$_sort = $this->getSort(true);
-			return $this->model->photos()->orderBy('date_taken', $order)->whereDate('date_taken', $_sort, $this->last['date_taken'])->first();
-		}
-		return $this->model->photos()->orderBy('date_taken', $order)->first();
+		return count($this->_photos) > 0;
 	}
 
 	/**
@@ -146,8 +106,11 @@ trait DisplayPhotos
 	 */
 	public function loadMorePhotos()
 	{
-		$this->setLast();
-		$this->photos;
+		if($this->canLoadMore)
+		{
+			$this->setLast();
+			$this->photos;
+		}
 	}
 
 	/**
@@ -185,6 +148,54 @@ trait DisplayPhotos
 	{
 		$this->count = 0;
 		$this->last = null;
+	}
+
+	/**
+	 * Get the group.
+	 */
+	private function getGroup()
+	{
+		return ['year' => 'Y', 'month' => 'F Y', 'day' => 'jS F Y'][$this->meta['group']['value']];
+	}
+
+	/**
+	 * Get the last loaded photo.
+	 */
+	private function getLastLoadedPhoto()
+	{
+		$sort = $this->getSort(false);
+		$order = $this->getOrder($sort);
+
+		if($this->last !== null)
+		{
+			$_sort = $this->getSort(true);
+			return $this->model->photos()->orderBy('date_taken', $order)->whereDate('date_taken', $_sort, $this->last['date_taken'])->first();
+		}
+		return $this->model->photos()->orderBy('date_taken', $order)->first();
+	}
+
+	/**
+	 * Get the order using the sort.
+	 *
+	 * @param string $sort
+	 */
+	private function getOrder(string $sort)
+	{
+		return $sort === '<' ? 'ASC' : 'DESC';
+	}
+
+	/**
+	 * Get the sort direction.
+	 *
+	 * @param boolean $reverse
+	 */
+	private function getSort(bool $reverse = false)
+	{
+		if($reverse)
+		{
+			return $this->meta['sort']['value'] === '>' ? '<' : '>';
+		}
+		return $this->meta['sort']['value'];
 	}
 
 	/**

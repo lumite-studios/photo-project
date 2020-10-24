@@ -7,7 +7,7 @@ return [
 	],
 
 	'links' => [
-		//
+		'jump-to' => 'Jump to Edit Member?',
 	],
 
 	'modals' => [
@@ -15,6 +15,7 @@ return [
 	],
 
 	'text' => [
+		'no-photos' => 'This member has not been tagged in any photos.',
 		'subtitle' => 'View all the photos this member has been tagged in.',
 	],
 ];

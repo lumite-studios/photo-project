@@ -19,12 +19,6 @@ class Album extends Model
 	protected $photoColumn = 'cover_photo_path';
 
 	/**
-	 * The column name to user for the name.
-	 * @var string
-	 */
-	protected $photoName = 'name';
-
-	/**
 	 * The folder to store the photo in.
 	 * @var string
 	 */
@@ -54,14 +48,4 @@ class Album extends Model
 	{
 		return $this->hasMany(Photo::class);
 	}
-
-    /**
-     * Get the default photo URL if no photo has been uploaded.
-     *
-     * @return string
-     */
-    protected function defaultPhotoUrl()
-    {
-		return 'https://dummyimage.com/500/EBF4FF/7F9CF5';
-    }
 }

@@ -14,12 +14,6 @@ trait HasPhoto
 	// protected $photoColumn = 'profile_photo_path';
 
 	/**
-	 * The column name to user for the name.
-	 * @var string
-	 */
-	// protected $photoName = 'name';
-
-	/**
 	 * The folder to store the photo in.
 	 * @var string
 	 */
@@ -79,7 +73,7 @@ trait HasPhoto
      */
     protected function defaultPhotoUrl()
     {
-        return 'https://ui-avatars.com/api/?name='.urlencode($this[$this->photoName]).'&color=7F9CF5&background=EBF4FF';
+		return 'https://dummyimage.com/500/EBF4FF/7F9CF5';
     }
 
     /**

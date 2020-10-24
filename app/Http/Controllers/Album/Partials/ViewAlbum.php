@@ -44,6 +44,7 @@ class ViewAlbum extends Component
 	{
 		$this->album = $this->model = $album;
 		$this->total = $this->album->photos->count();
+		$this->photos;
 	}
 
 	/**

@@ -32,7 +32,7 @@ class IndexController extends Component
 		{
 			$this->hasFamily = true;
 			$this->albums = auth()->user()->currentFamily->albumsWithOptionalUnsorted()->orderBy('updated_at', 'DESC')->take(4)->get();
-			$this->members = auth()->user()->currentFamily->members()->whereHas('tags')->orderBy('updated_at', 'DESC')->take(4)->get();
+			$this->members = auth()->user()->currentFamily->members()->orderBy('updated_at', 'DESC')->take(4)->get();
 		} else
 		{
 			$this->hasFamily = false;

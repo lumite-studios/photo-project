@@ -20,12 +20,6 @@ class Photo extends Model
 	protected $photoColumn = 'path';
 
 	/**
-	 * The column name to user for the name.
-	 * @var string
-	 */
-	protected $photoName = 'name';
-
-	/**
 	 * The folder to store the photo in.
 	 * @var string
 	 */

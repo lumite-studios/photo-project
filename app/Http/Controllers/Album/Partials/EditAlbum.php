@@ -32,7 +32,7 @@ class EditAlbum extends Component
 	 * An array of listeners for events.
 	 * @var array
 	 */
-	protected $listeners = ['updateMeta'];
+	protected $listeners = ['refreshAlbum', 'updateMeta'];
 
 	/**
 	 * Setup the components required data.
@@ -45,6 +45,7 @@ class EditAlbum extends Component
 		$this->canEdit = $this->album->editable;
 		$this->selectedPhotos = collect();
 		$this->total = $this->album->photos->count();
+		$this->photos;
 	}
 
 	/**
@@ -124,5 +125,17 @@ class EditAlbum extends Component
 		{
 			$this->togglePhoto($photo, $checked);
 		}
+	}
+
+	/**
+	 * Listen to the 'refreshAlum' event.
+	 */
+	public function refreshAlbum()
+	{
+		// todo: figure out a better way
+		// than just clearing the last
+		$this->photos;
+		$this->album->refresh();
+		$this->selectedPhotos = collect();
 	}
 }

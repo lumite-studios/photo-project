@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Controllers\Album;
 
+use App\Models\Album;
+use App\Models\Photo;
 use App\Traits\DisplayPhotosOptions;
 use Illuminate\Support\Str;
 use Livewire\Component;
@@ -18,6 +20,12 @@ class ShowController extends Component
 	public $album;
 
 	/**
+	 * The albums these photos could be moved to.
+	 * @var Collection
+	 */
+	public $availableAlbums = [];
+
+	/**
 	 * Whether the album can have photos uploaded.
 	 * @var boolean
 	 */
@@ -27,7 +35,7 @@ class ShowController extends Component
 	 * Whether the album is being edited.
 	 * @var boolean
 	 */
-	public $editing = false;
+	public $editing = true;
 
 	/**
 	 * The selected photos that exist in the album.
@@ -63,6 +71,7 @@ class ShowController extends Component
 	public function mount(string $album_slug)
 	{
 		$this->album = auth()->user()->currentFamily->albums()->where('slug', '=', $album_slug)->first();
+		$this->availableAlbums = auth()->user()->currentFamily->albumsWithoutUnsorted()->where('id', '!=', $this->album->id)->get();
 		$this->canUpload = $this->album->editable;
 		$this->selectedPhotos = collect();
 	}
@@ -148,5 +157,36 @@ class ShowController extends Component
 	public function updateSelectedPhotos($selectedPhotos)
 	{
 		$this->selectedPhotos = collect($selectedPhotos);
+	}
+
+	/**
+	 * Delete the selected photos.
+	 */
+	public function deleteSelectedPhotos()
+	{
+		foreach($this->selectedPhotos as $photo)
+		{
+			$photo = Photo::where('id', '=', $photo['id'])->first();
+			$photo->delete();
+		}
+
+		$this->selectedPhotos = collect();
+		$this->emit('refreshAlbum');
+	}
+
+	/**
+	 * Move the selected photos.
+	 */
+	public function moveSelectedPhotos(Album $album)
+	{
+		foreach($this->selectedPhotos as $photo)
+		{
+			$photo = Photo::where('id', '=', $photo['id'])->first();
+			$photo->album()->associate($album);
+			$photo->save();
+		}
+
+		$this->selectedPhotos = collect();
+		$this->emit('refreshAlbum');
 	}
 }

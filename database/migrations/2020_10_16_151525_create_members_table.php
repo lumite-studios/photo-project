@@ -17,6 +17,7 @@ class CreateMembersTable extends Migration
             $table->increments('id');
             $table->integer('family_id')->unsigned();
             $table->string('name');
+			$table->text('cover_photo_path')->nullable();
             $table->timestamps();
 
 			$table->foreign('family_id')
