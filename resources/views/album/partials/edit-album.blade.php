@@ -7,7 +7,9 @@
 			<x-label>{{ __('display-photos.select.select') }}</x-select>
 		</div>
 		<div class="flex-grow"></div>
-		<a href="#edit-album-form">{{ __('album/show.links.jump-to') }}</a>
+		@if($canEdit)
+			<a href="#edit-album-form">{{ __('album/show.links.jump-to') }}</a>
+		@endif
 	</div>
 
 	@if(count($this->photos) === 0)
