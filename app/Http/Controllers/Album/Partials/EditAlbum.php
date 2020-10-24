@@ -134,6 +134,7 @@ class EditAlbum extends Component
 	{
 		// todo: figure out a better way
 		// than just clearing the last
+		$this->clearLast();
 		$this->photos;
 		$this->album->refresh();
 		$this->selectedPhotos = collect();

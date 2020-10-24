@@ -62,7 +62,7 @@ trait DisplayPhotos
 	{
 		if($this->total === 0)
 		{
-			return collect();
+			return $this->clearAll();
 		}
 
 		// set the variables
@@ -70,6 +70,11 @@ trait DisplayPhotos
 		$order = $this->getOrder($sort);
 		$group = $this->getGroup();
 		$last = $this->getLastLoadedPhoto();
+
+		if($last === null)
+		{
+			return $this->clearAll();
+		}
 
 		// using the last loaded photo,
 		// get the next few months
@@ -142,6 +147,17 @@ trait DisplayPhotos
 	}
 
 	/**
+	 * Clear all data.
+	 */
+	private function clearAll()
+	{
+		$this->total = 0;
+		$this->_photos = collect();
+		$this->clearLast();
+		return collect();
+	}
+
+	/**
 	 * Reset the last loaded data.
 	 */
 	private function clearLast()
@@ -165,13 +181,15 @@ trait DisplayPhotos
 	{
 		$sort = $this->getSort(false);
 		$order = $this->getOrder($sort);
+		$last = null;
 
 		if($this->last !== null)
 		{
 			$_sort = $this->getSort(true);
-			return $this->model->photos()->orderBy('date_taken', $order)->whereDate('date_taken', $_sort, $this->last['date_taken'])->first();
+			$last = $this->model->photos()->orderBy('date_taken', $order)->whereDate('date_taken', $_sort, $this->last['date_taken'])->first();
 		}
-		return $this->model->photos()->orderBy('date_taken', $order)->first();
+
+		return $last === null ? $this->model->photos()->orderBy('date_taken', $order)->first() : $last;
 	}
 
 	/**

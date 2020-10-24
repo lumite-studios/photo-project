@@ -1,7 +1,7 @@
 <div>
 	@livewire('album.partials.edit-photo-modal')
 
-	<div class="flex">
+	<div class="flex mb-1">
 		@if($this->hasPhotos)
 			<div>
 				<input type="checkbox" wire:change="toggleAll($event.target.checked)" />
