@@ -40,4 +40,15 @@ class LoginController extends Controller
 			return redirect()->back()->withErrors(['failed' => 'failed']);
 		}
 	}
+
+	/**
+	 * Handle logging a user out of their account.
+	 *
+	 * @return redirect
+	 */
+	public function delete()
+	{
+		auth()->logout();
+		return redirect()->route('index');
+	}
 }

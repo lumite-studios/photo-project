@@ -60,7 +60,7 @@
 			<!-- options -->
 			<div class="flex justify-end mb-5 px-6 sm:px-0">
 				<a href="{{ route('member.index') }}"><x-secondary-button class="rounded-r-none">{{ __('member/index.title') }}</x-secondary-button></a>
-				<a href="{{ route('member.create') }}"><x-button class="rounded-l-none">{{ __('member/index.create') }}</x-button></a>
+				<a href="{{ route('member.create') }}"><x-button class="rounded-l-none">{{ __('member/create.title') }}</x-button></a>
 			</div>
 			<!-- list -->
 			<div class="gap-5 grid grid-cols-2 md:grid-cols-4">

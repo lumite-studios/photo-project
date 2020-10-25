@@ -41,10 +41,13 @@ Route::group(['as' => 'auth.', 'middleware' => 'guest'], function() {
 Route::group(['middleware' => 'auth'], function() {
 	// dashboard
 	Route::get('/dashboard', DashboardIndexController::class)->name('dashboard');
+	// logout
+	Route::post('/logout', [LoginController::class, 'delete'])->name('logout');
 	// family
 	Route::group(['as' => 'family.', 'prefix' => 'family'], function() {
 		// create
 		Route::get('/create', FamilyCreateController::class)->name('create');
+		Route::get('/{family_id}', MemberShowController::class)->name('show');
 	});
 	// album
 	Route::group(['as' => 'album.', 'prefix' => 'album'], function() {

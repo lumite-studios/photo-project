@@ -21,6 +21,7 @@ return [
 	],
 
 	'text' => [
+		'created' => 'Successfully created a member!',
 		'creating-member' => 'Creating Member in',
 		'subtitle' => 'Create a member to tag in photos.',
 	],

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Livewire;
 
 use Livewire\Component;
 
@@ -37,6 +37,14 @@ class Toast extends Component
 	public $type = 'success';
 
 	/**
+	 * Render the livewire component.
+	 */
+    public function render()
+    {
+        return view('livewire.toast');
+    }
+
+	/**
 	 * Send a toast message.
 	 *
 	 * @param string $message
@@ -48,12 +56,4 @@ class Toast extends Component
 		$this->type = $type;
 		$this->dispatchBrowserEvent('toast-message-show');
 	}
-
-	/**
-	 * Render the livewire component.
-	 */
-    public function render()
-    {
-        return view('toast');
-    }
 }

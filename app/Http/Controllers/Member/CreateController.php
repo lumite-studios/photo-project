@@ -39,6 +39,8 @@ class CreateController extends Component
 			'name' => $this->state['name'],
 		]);
 
-		return redirect()->route('member.index', ['member_id' => $member->id]);
+		$this->emit('toast', __('member/create.text.created'), 'success');
+
+		return redirect()->route('member.show', ['member_id' => $member->id]);
 	}
 }
