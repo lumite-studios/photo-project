@@ -19,8 +19,7 @@ class CreatePhotosTable extends Migration
 			$table->string('name');
 			$table->string('path')->unique();
 			$table->string('description')->nullable();
-			$table->integer('height')->index();
-			$table->integer('width')->index();
+			$table->string('signature')->index();
 			$table->timestamp('date_taken')->nullable()->index();
             $table->timestamps();
 

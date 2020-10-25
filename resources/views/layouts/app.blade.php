@@ -36,6 +36,7 @@
 
 			@include('layouts.partials.footer')
 		</div>
+		@livewire('toast')
         @livewireScripts
     </body>
 </html>

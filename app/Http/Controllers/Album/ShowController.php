@@ -116,6 +116,7 @@ class ShowController extends Component
 		]);
 
 		$driver = config('filesystems.default');
+		$duplicates = collect();
 
 		foreach($this->state['photos'] as $photo)
 		{
@@ -123,7 +124,8 @@ class ShowController extends Component
 			$name = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
 			$slug = Str::slug($name)."-".time().'.'.$photo->getClientOriginalExtension();
 			$path = $this->album->slug.'/'.$slug;
-			list($height, $width) = getimagesize($photo->getRealPath());
+
+			// calculate date taken from the photo
 			$dateTaken = array_key_exists('DateTimeOriginal', exif_read_data($photo->getRealPath()))
 				? exif_read_data($photo->getRealPath())['DateTimeOriginal']
 				: (array_key_exists('FileDateTime', exif_read_data($photo->getRealPath()))
@@ -131,21 +133,51 @@ class ShowController extends Component
 					: null
 				);
 
+			// get a signature from the image
+			$image = new \Imagick();
+			$image->readImageBlob($photo->get());
+			$signature = $image->getImageSignature();
+
 			// store it
 			$driver === 'local' ? $photo->storeAs('public/'.$this->album->slug, $slug) : $photo->storePubliclyAs($this->album->slug, $slug);
 
 			// create the photo
-			$photo = $this->album->photos()->create([
-				'date_taken' => $dateTaken,
-				'height' => $height,
-				'name' => $name,
-				'path' => $path,
-				'width' => $width,
-			]);
+			$photo = new Photo;
+			$photo->date_taken = $dateTaken;
+			$photo->name = $name;
+			$photo->path = $path;
+			$photo->signature = $signature;
+
+			// are we NOT checking for duplicates?
+			// or is the photo not a duplicate
+			if(!$this->album->duplicate_check)
+			{
+				$this->album->photos()->create($photo->toArray());
+			} else
+			{
+				if(!$photo->isDuplicate())
+				{
+					$this->album->photos()->create($photo->toArray());
+				} else
+				{
+					$duplicates->push($photo->name);
+				}
+			}
+		}
+
+		if($duplicates->count() > 0)
+		{
+			$error = __('album/show.text.duplicates');
+			$error .= '<ul>';
+			foreach($duplicates as $dupe)
+			{
+				$error .= '<li>'.$dupe.'</li>';
+			}
+			$error .= '</ul>';
+			$this->emit('toast', $error, 'error');
 		}
 
 		$this->showUploadingPhotosModal = false;
-		$this->state['photos'] = [];
 		$this->emit('refreshAlbum');
 	}
 

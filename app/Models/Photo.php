@@ -34,10 +34,9 @@ class Photo extends Model
 	[
 		'date_taken',
 		'editable',
-		'height',
 		'name',
 		'path',
-		'width',
+		'signature',
 	];
 
 	/**
@@ -48,6 +47,26 @@ class Photo extends Model
 	public function album()
 	{
 		return $this->belongsTo(Album::class);
+	}
+
+	/**
+	 * Get any duplicates of this photo.
+	 *
+	 * @return Collection
+	 */
+	public function getDuplicates()
+	{
+		return Photo::where('signature', '=', $this->signature)->get();
+	}
+
+	/**
+	 * Whether this photo is a duplicate.
+	 *
+	 * @return boolean
+	 */
+	public function isDuplicate()
+	{
+		return $this->getDuplicates()->count() !== 0;
 	}
 
 	/**

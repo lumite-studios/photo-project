@@ -58,6 +58,7 @@ return [
 	],
 
 	'text' => [
+		'duplicates' => 'The following duplicate photos were not uploaded:',
 		'no-photos' => 'There are no photos in this album.',
 		'subtitle' => '',
 	],

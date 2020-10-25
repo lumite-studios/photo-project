@@ -94,7 +94,7 @@
 	<x-dialog-modal wire:model="showUploadingPhotosModal">
 		<x-slot name="title">{{ __('album/show.links.upload-photos') }}</x-slot>
 		<x-slot name="content">
-			<x-input type="file" wire:model.defer="state.photos" multiple />
+			<x-input type="file" wire:model="state.photos" multiple />
 			<x-input-error for="state.photos" class="mt-2" />
 		</x-slot>
 		<x-slot name="footer">
