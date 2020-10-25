@@ -57,6 +57,9 @@ class EditPhotoModal extends Component
         return view('album.partials.edit-photo-modal');
 	}
 
+	/**
+	 * Clear the state.
+	 */
 	public function clearState()
 	{
 		$this->state = [

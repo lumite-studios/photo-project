@@ -3,7 +3,30 @@ return [
 	'title' => 'Viewing Member: ',
 
 	'form' => [
-		//
+		'edit-member' => [
+			'danger-zone' => [
+				'section' => [
+					'description' => 'Once you delete a member, there is no going back.',
+					'title' => 'Danger Zone',
+				],
+				'delete' => [
+					'submit' => 'Delete Member',
+					'title' => 'Any tags of this member will be removed from photos.',
+				],
+			],
+			'details' => [
+				'section' => [
+					'description' => 'Change the details of the member.',
+					'title' => 'Member Details',
+				],
+				'name' => 'Name',
+				'submit' => 'Update',
+			],
+		],
+		'edit-photo' => [
+			'cover_photo' => 'Use this photo as the Cover Photo?',
+			'submit' => 'Save Changes',
+		],
 	],
 
 	'links' => [

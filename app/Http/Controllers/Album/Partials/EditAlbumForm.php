@@ -46,23 +46,6 @@ class EditAlbumForm extends Component
 	}
 
 	/**
-	 * Delete an album.
-	 */
-	public function delete()
-	{
-		$unsorted = Album::where('editable', '=', false)->first();
-
-		foreach($this->album->photos as $photo)
-		{
-			$photo->album()->associate($unsorted);
-			$photo->save();
-		}
-
-		Album::where('id', '=', $this->album->id)->first()->delete();
-		return redirect()->route('album.index');
-	}
-
-	/**
 	 * Update the album.
 	 */
 	public function update()
@@ -80,5 +63,22 @@ class EditAlbumForm extends Component
 		$this->album->save();
 
 		$this->emit('refreshAlbum');
+	}
+
+	/**
+	 * Delete an album.
+	 */
+	public function delete()
+	{
+		$unsorted = Album::where('editable', '=', false)->first();
+
+		foreach($this->album->photos as $photo)
+		{
+			$photo->album()->associate($unsorted);
+			$photo->save();
+		}
+
+		Album::where('id', '=', $this->album->id)->first()->delete();
+		return redirect()->route('album.index');
 	}
 }

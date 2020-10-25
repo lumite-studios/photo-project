@@ -17,7 +17,7 @@ class EditMemberForm extends Component
 	 * @var array
 	 */
 	public $state = [
-		//
+		'name' => null,
 	];
 
 	/**
@@ -29,7 +29,7 @@ class EditMemberForm extends Component
 	{
 		$this->member = $member;
 		$this->state = [
-			//
+			'name' => $this->member->name,
 		];
 	}
 
@@ -39,5 +39,30 @@ class EditMemberForm extends Component
     public function render()
     {
         return view('member.partials.edit-member-form');
+	}
+
+	/**
+	 * Update this member.
+	 */
+	public function update()
+	{
+		$this->validate([
+			'state' => ['array', 'required'],
+			'state.name' => ['required', 'string'],
+		]);
+
+		$this->member->name = $this->state['name'];
+		$this->member->save();
+
+		$this->emit('refreshMember');
+	}
+
+	/**
+	 * Delete this member.
+	 */
+	public function delete()
+	{
+		Member::where('id', '=', $this->member->id)->first()->delete();
+		return redirect()->route('member.index');
 	}
 }

@@ -22,6 +22,14 @@ class ShowController extends Component
 	public $showViewingPhotoModal = false;
 
 	/**
+	 * The form state.
+	 * @var array
+	 */
+	public $state = [
+		'cover_photo' => false,
+	];
+
+	/**
 	 * The currently selected photo to view.
 	 * @param Photo
 	 */
@@ -31,7 +39,7 @@ class ShowController extends Component
 	 * An array of listeners for events.
 	 * @var array
 	 */
-	protected $listeners = ['refresh' => '$refresh'];
+	protected $listeners = ['refreshMember'];
 
 	/**
 	 * Setup the components required data.
@@ -64,7 +72,47 @@ class ShowController extends Component
 	 */
 	public function toggleViewingPhotoModal(Photo $photo)
 	{
+		$this->state = [
+			'cover_photo' => $this->member->cover_photo_path === $photo->path ? true : false,
+		];
 		$this->viewPhoto = $photo;
 		$this->showViewingPhotoModal = true;
+	}
+
+	/**
+	 * Update the photo.
+	 */
+	public function update()
+	{
+		$this->validate([
+			'state' => ['array', 'required'],
+			'state.cover_photo' => ['boolean', 'required'],
+		]);
+
+		if($this->state['cover_photo'])
+		{
+			$this->member->cover_photo_path = $this->viewPhoto->path;
+			$this->member->save();
+		}
+
+		$this->clearState();
+	}
+
+	/**
+	 * Clear the state.
+	 */
+	public function clearState()
+	{
+		$this->state = [];
+		$this->viewPhoto = null;
+		$this->showViewingPhotoModal = false;
+	}
+
+	/**
+	 * Refresh the member.
+	 */
+	public function refreshMember()
+	{
+		$this->member->refresh();
 	}
 }

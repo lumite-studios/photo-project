@@ -94,6 +94,15 @@
 						<div class="italic mt-3 text-center text-gray-500 text-sm">{{ $viewPhoto->description }}</div>
 					@endif
 				</div>
+				<!-- cover photo -->
+				<div class="text-center">
+					<input name="cover_photo" type="checkbox" wire:model="state.cover_photo" />
+					<x-label for="cover_photo">{{ __('member/show.form.edit-photo.cover_photo') }}</x-label>
+					<x-input-error for="state.cover_photo" />
+				</div>
+			</x-slot>
+			<x-slot name="footer">
+				<x-button wire:click="update">{{ __('member/show.form.edit-photo.submit') }}</x-button>
 			</x-slot>
 		@endif
 	</x-dialog-modal>
