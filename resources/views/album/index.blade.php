@@ -7,7 +7,7 @@
 					<div class="text-gray-600 text-lg">{{ __('dashboard/index.text.create-album') }}</div>
 					<div class="flex mt-3 justify-center">
 						<a href="{{ route('album.create') }}">
-							<x-button>{{ __('dashboard/index.links.create-album') }}</x-button>
+							<x-button>{{ __('album/create.title') }}</x-button>
 						</a>
 					</div>
 				</div>
