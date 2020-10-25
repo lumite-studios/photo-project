@@ -36,7 +36,7 @@
 	<!-- danger zone -->
 	<x-form-section submit="update">
 		<x-slot name="title"><span class="text-red-500">{{ __('album/show.form.edit-album.danger-zone.section.title') }}</span></x-slot>
-		<x-slot name="description"><span class="text-red-400">{{ __('album/show.form.edit-album.danger-zone.section.description') }}</span></x-slot>
+		<x-slot name="description"><span class="text-red-600">{{ __('album/show.form.edit-album.danger-zone.section.description') }}</span></x-slot>
 		<x-slot name="form">
 			<div class="flex items-center">
 				<div class="flex-grow text-gray-500">{{ __('album/show.form.edit-album.danger-zone.delete-album.title') }}</div>

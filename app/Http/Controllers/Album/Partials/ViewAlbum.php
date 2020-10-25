@@ -32,7 +32,7 @@ class ViewAlbum extends Component
 	 * An array of listeners for events.
 	 * @var array
 	 */
-	protected $listeners = ['updateMeta'];
+	protected $listeners = ['refreshAlbum', 'updateMeta'];
 
 	/**
 	 * Setup the components required data.

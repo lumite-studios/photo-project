@@ -35,7 +35,7 @@ class ShowController extends Component
 	 * Whether the album is being edited.
 	 * @var boolean
 	 */
-	public $editing = true;
+	public $editing = false;
 
 	/**
 	 * The selected photos that exist in the album.

@@ -9,13 +9,13 @@ return [
 			[
 				'section' =>
 				[
-					'description' => '',
+					'description' => 'Once you delete an album, there is no going back.',
 					'title' => 'Danger Zone',
 				],
 				'delete-album' =>
 				[
 					'submit' => 'Delete Album',
-					'title' => 'Once you delete an album, there is no going back.',
+					'title' => 'Any photos in this album will be moved to Unsorted.',
 				],
 			],
 			'details' =>

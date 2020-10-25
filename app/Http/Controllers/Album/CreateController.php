@@ -3,9 +3,12 @@ namespace App\Http\Controllers\Album;
 
 use Illuminate\Support\Str;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class CreateController extends Component
 {
+	use WithFileUploads;
+
 	/**
 	 * The create form data.
 	 * @var array
@@ -52,28 +55,35 @@ class CreateController extends Component
 
 		if($this->state['cover_photo'] !== null)
 		{
-			// set the attributes for the cover photo upload
+			$photo = $this->state['cover_photo'];
+
+			// set variables
+			$name = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
+			$slug = Str::slug($name)."-".time().'.'.$photo->getClientOriginalExtension();
+			$path = $album->slug.'/'.$slug;
+			list($height, $width) = getimagesize($photo->getRealPath());
+			$dateTaken = array_key_exists('DateTimeOriginal', exif_read_data($photo->getRealPath()))
+				? exif_read_data($photo->getRealPath())['DateTimeOriginal']
+				: (array_key_exists('FileDateTime', exif_read_data($photo->getRealPath()))
+					? \Carbon\Carbon::parse(exif_read_data($photo->getRealPath())['FileDateTime'])->format('Y-m-d H:m:s')
+					: null
+				);
+
+			// store it
 			$driver = config('filesystems.default');
-			$photoName = pathinfo($this->state['cover_photo']->getClientOriginalName(), PATHINFO_FILENAME);
-			$photoSlug = Str::slug($photoName)."-".time().'.'.$this->state['cover_photo']->getClientOriginalExtension();
-
-			// set the path
-			$path = $album->slug.'/'.$photoSlug;
-
-			// save the path to the album
-			$album->cover_photo_path = $path;
-			$album->save();
+			$driver === 'local' ? $photo->storeAs('public/'.$album->slug, $slug) : $photo->storePubliclyAs($album->slug, $slug);
 
 			// create the photo
 			$album->photos()->create([
-				'name' => $photoName,
+				'date_taken' => $dateTaken,
+				'height' => $height,
+				'name' => $name,
 				'path' => $path,
+				'width' => $width,
 			]);
 
-			// store it
-			$driver === 'local'
-				? $this->state['cover_photo']->storeAs('public/'.$album->slug, $photoSlug)
-				: $this->state['cover_photo']->storePubliclyAs($album->slug, $photoSlug);
+			$album->cover_photo_path = $path;
+			$album->save();
 		}
 
         return redirect()->route('album.show', ['album_slug' => $album->slug]);
