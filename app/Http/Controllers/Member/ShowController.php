@@ -95,6 +95,7 @@ class ShowController extends Component
 			$this->member->save();
 		}
 
+		$this->emit('toast', __('member/show.text.updated-member'), 'success');
 		$this->clearState();
 	}
 

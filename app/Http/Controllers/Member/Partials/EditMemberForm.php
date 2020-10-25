@@ -54,6 +54,7 @@ class EditMemberForm extends Component
 		$this->member->name = $this->state['name'];
 		$this->member->save();
 
+		$this->emit('toast', __('member/show.text.updated-member'), 'success');
 		$this->emit('refreshMember');
 	}
 
@@ -63,6 +64,7 @@ class EditMemberForm extends Component
 	public function delete()
 	{
 		Member::where('id', '=', $this->member->id)->first()->delete();
+		$this->emit('toast', __('member/show.text.deleted-member'), 'success');
 		return redirect()->route('member.index');
 	}
 }
