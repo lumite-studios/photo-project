@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Dashboard\IndexController as DashboardIndexController;
 use App\Http\Controllers\Family\CreateController as FamilyCreateController;
+use App\Http\Controllers\Family\UpdateController as FamilyUpdateController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\Member\CreateController as MemberCreateController;
 use App\Http\Controllers\Member\IndexController as MemberIndexController;
@@ -47,7 +48,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::group(['as' => 'family.', 'prefix' => 'family'], function() {
 		Route::get('/', MemberShowController::class)->name('index');
 		Route::get('/create', FamilyCreateController::class)->name('create');
-		Route::get('/{family_id}', FamilyCreateController::class)->name('update');
+		Route::patch('/{family_id}', [FamilyUpdateController::class, 'update'])->name('update');
 	});
 	// album
 	Route::group(['as' => 'album.', 'prefix' => 'album'], function() {
