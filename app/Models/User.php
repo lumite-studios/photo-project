@@ -67,5 +67,87 @@ class User extends Authenticatable
     protected function defaultPhotoUrl()
     {
         return 'https://ui-avatars.com/api/?name='.urlencode($this->name).'&color=7F9CF5&background=EBF4FF';
-    }
+	}
+
+	/**
+	 * Does the user have "admin" privileges?
+	 *
+	 * @return boolean
+	 */
+	public function canAdmin()
+	{
+		return $this->hasPermission('admin');
+	}
+
+	/**
+	 * Can the user delete resources?
+	 *
+	 * @return boolean
+	 */
+	public function canDelete()
+	{
+		return $this->hasPermission('delete');
+	}
+
+	/**
+	 * Can the user edit resources?
+	 *
+	 * @return boolean
+	 */
+	public function canEdit()
+	{
+		return $this->hasPermission('edit');
+	}
+
+	/**
+	 * Can the user invite others?
+	 *
+	 * @return boolean
+	 */
+	public function canInvite()
+	{
+		return $this->hasPermission('invite');
+	}
+
+	/**
+	 * Can the user upload photos?
+	 *
+	 * @return boolean
+	 */
+	public function canUpload()
+	{
+		return $this->hasPermission('upload');
+	}
+
+	/**
+	 * Can the user view resources?
+	 *
+	 * @return boolean
+	 */
+	public function canView()
+	{
+		return $this->hasPermission('view');
+	}
+
+	/**
+	 * Get the users permission with their current family.
+	 *
+	 * @return Collection
+	 */
+	public function getPermissions()
+	{
+		return collect(json_decode($this->families()->where('families.id', '=', $this->currentFamily->id)->first()->pivot->permissions));
+	}
+
+	/**
+	 * Does the user have a permission?
+	 *
+	 * @param string $permission
+	 * @return boolean
+	 */
+	public function hasPermission(string $permission)
+	{
+		$permissions = $this->getPermissions();
+		return $permissions->contains('*') ? true : $permissions->contains($permission);
+	}
 }

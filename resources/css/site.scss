@@ -1,3 +1,6 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+
 a {
 	@apply text-brand;
 }
@@ -21,3 +24,42 @@ input[type="checkbox"], input[type="checkbox"] + label {
 input[type="checkbox"] + label {
 	@apply leading-none ml-1;
 }
+
+/**--------------------------------------------------
+ * table
+ --------------------------------------------------*/
+table {
+	@apply border border-gray-200 rounded w-full;
+
+	thead {
+		tr {
+			th {
+				@apply bg-gray-200 font-bold p-2 tracking-wide whitespace-no-wrap;
+			}
+		}
+	}
+
+	tbody {
+		th {
+			@apply font-bold px-1 text-left w-px;
+		}
+
+		tr {
+			@apply bg-gray-100;
+
+			&:nth-child(even) {
+				@apply bg-transparent;
+			}
+
+			td {
+				@apply p-2 whitespace-no-wrap;
+
+				input[type="checkbox"] {
+					@apply m-0;
+				}
+			}
+		}
+	}
+}
+
+@import 'tailwindcss/utilities';

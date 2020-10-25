@@ -1,4 +1,4 @@
-@props(['submit'])
+@props(['submit' => null])
 
 <div {{ $attributes->merge(['class' => 'md:grid md:grid-cols-3 md:gap-5']) }}>
 	<div class="md:col-span-1">
@@ -9,13 +9,22 @@
 	</div>
 
 	<div class="mt-5 md:mt-0 md:col-span-2">
-		<form wire:submit.prevent="{{ $submit }}">
+		@if($submit !== null)
+			<form wire:submit.prevent="{{ $submit }}">
+				<x-card>
+					<x-slot name="content">{{ $form }}</x-slot>
+					@if(isset($actions))
+						<x-slot name="footer">{{ $actions }}</x-slot>
+					@endif
+				</x-card>
+			</form>
+		@else
 			<x-card>
 				<x-slot name="content">{{ $form }}</x-slot>
 				@if(isset($actions))
 					<x-slot name="footer">{{ $actions }}</x-slot>
 				@endif
 			</x-card>
-		</form>
+		@endif
 	</div>
 </div>

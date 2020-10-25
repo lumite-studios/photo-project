@@ -17,7 +17,7 @@
 			<x-dropdown-title>{{ __('navigation.profile.manage-families') }}</x-dropdown-title>
 			@if(auth()->user()->hasFamily())
 				<x-dropdown-link href="{{ route('family.index') }}">
-					{{ __('family/show.title') }}
+					{{ __('family/index.title') }}
 				</x-dropdown-link>
 			@endif
 			<x-dropdown-link href="{{ route('family.create') }}">

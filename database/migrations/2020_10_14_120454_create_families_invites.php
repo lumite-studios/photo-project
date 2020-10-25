@@ -18,6 +18,7 @@ class CreateFamiliesInvites extends Migration
             $table->integer('family_id')->unsigned();
 			$table->string('email')->index();
 			$table->string('code');
+			$table->json('permissions')->nullable();
             $table->timestamps();
 
 			$table->foreign('family_id')

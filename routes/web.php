@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Dashboard\IndexController as DashboardIndexController;
 use App\Http\Controllers\Family\CreateController as FamilyCreateController;
+use App\Http\Controllers\Family\IndexController as FamilyIndexController;
 use App\Http\Controllers\Family\UpdateController as FamilyUpdateController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\Member\CreateController as MemberCreateController;
@@ -46,7 +47,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::post('/logout', [LoginController::class, 'delete'])->name('logout');
 	// family
 	Route::group(['as' => 'family.', 'prefix' => 'family'], function() {
-		Route::get('/', MemberShowController::class)->name('index');
+		Route::get('/', FamilyIndexController::class)->name('index');
 		Route::get('/create', FamilyCreateController::class)->name('create');
 		Route::patch('/{family_id}', [FamilyUpdateController::class, 'update'])->name('update');
 	});

@@ -21,7 +21,7 @@
 		</x-slot>
 	</x-form-section>
 	<!-- danger zone -->
-	<x-form-section submit="update">
+	<x-form-section submit="delete">
 		<x-slot name="title"><span class="text-red-500">{{ __('member/show.form.edit-member.danger-zone.section.title') }}</span></x-slot>
 		<x-slot name="description"><span class="text-red-600">{{ __('member/show.form.edit-member.danger-zone.section.description') }}</span></x-slot>
 		<x-slot name="form">
@@ -30,7 +30,7 @@
 				<x-button disabled wire:loading wire:target="delete">
 					<em class="fas fa-circle-notch fa-spin"></em>
 				</x-button>
-				<x-danger-button wire:loading.remove wire:click="delete" wire:target="delete">
+				<x-danger-button wire:loading.remove wire:target="delete">
 					{{ __('member/show.form.edit-member.danger-zone.delete.submit') }}
 				</x-danger-button>
 			</div>
