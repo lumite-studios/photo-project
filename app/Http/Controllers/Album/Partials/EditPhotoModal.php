@@ -8,6 +8,10 @@ use Livewire\Component;
 
 class EditPhotoModal extends Component
 {
+	/**
+	 * The members that can be tagged.
+	 * @var Collection
+	 */
 	public $members;
 
 	/**
@@ -132,6 +136,7 @@ class EditPhotoModal extends Component
 				$member = auth()->user()->currentFamily->members()->create([
 					'name' => $this->newTag['member'],
 				]);
+				$this->members->push($member);
 			}
 		}
 
