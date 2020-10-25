@@ -5,7 +5,7 @@
 				<div class="text-center">
 					<div class="text-gray-600 text-lg">{{ __('dashboard/index.text.create-member') }}</div>
 					<div class="flex mt-3 justify-center">
-						<a href="{{ route('album.create') }}">
+						<a href="{{ route('member.create') }}">
 							<x-button>{{ __('member/create.title') }}</x-button>
 						</a>
 					</div>
@@ -15,7 +15,7 @@
 	@else
 		<!-- options -->
 		<div class="flex justify-end mb-5 px-6 sm:px-0">
-			<a href="{{ route('album.create') }}"><x-button>{{ __('member/create.title') }}</x-button></a>
+			<a href="{{ route('member.create') }}"><x-button>{{ __('member/create.title') }}</x-button></a>
 		</div>
 		<!-- list -->
 		<div class="gap-5 grid grid-cols-2 md:grid-cols-4">

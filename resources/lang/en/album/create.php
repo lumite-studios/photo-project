@@ -3,10 +3,8 @@ return
 [
 	'title' => 'Create Album',
 
-	'form' =>
-	[
-		'section' =>
-		[
+	'form' => [
+		'section' => [
 			'description' => 'Create a new album to add photos to.',
 			'name' => 'Album Details',
 		],
@@ -16,18 +14,15 @@ return
 		'submit' => 'Create',
 	],
 
-	'links' =>
-	[
+	'links' => [
 		//
 	],
 
-	'modals' =>
-	[
+	'modals' => [
 		//
 	],
 
-	'text' =>
-	[
+	'text' => [
 		'creating-album' => 'Creating Album in',
 		'subtitle' => 'Create an album to collect photos.',
 	],
