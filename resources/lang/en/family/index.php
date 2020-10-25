@@ -29,6 +29,7 @@ return [
 			],
 			'table' => [
 				'name' => 'Name',
+				'admin' => 'Admin?',
 				'view' => 'View?',
 				'invite' => 'Invite?',
 				'upload' => 'Upload?',

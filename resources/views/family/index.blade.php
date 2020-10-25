@@ -31,31 +31,39 @@
 					<thead>
 						<tr>
 							<th class="text-left">{{ __('family/index.form.users.table.name') }}</th>
+							<th class="w-1">{{ __('family/index.form.users.table.admin') }}</th>
 							<th class="w-1">{{ __('family/index.form.users.table.view') }}</th>
 							<th class="w-1">{{ __('family/index.form.users.table.invite') }}</th>
 							<th class="w-1">{{ __('family/index.form.users.table.upload') }}</th>
 							<th class="w-1">{{ __('family/index.form.users.table.edit') }}</th>
 							<th class="w-1">{{ __('family/index.form.users.table.delete') }}</th>
+							<th class="w-1">&nbsp;</th>
 						</tr>
 					</thead>
 					<tbody>
-						@foreach(auth()->user()->currentFamily->users as $user)
+						@foreach($users as $user)
 							<tr>
-								<td>{{ $user->name }}</td>
+								<td>{{ $user['name'] }}</td>
 								<td class="text-center">
-									{!! $user->canView() ? '<em class="fas fa-check text-green-500"></em>' : '<em class="fas fa-times text-red-500"></em>' !!}
+									<input type="checkbox" wire:model="users.{{ $loop->index }}.admin" @if($user->hasAllPermissions()) disabled @endif/>
 								</td>
 								<td class="text-center">
-									{!! $user->canInvite() ? '<em class="fas fa-check text-green-500"></em>' : '<em class="fas fa-times text-red-500"></em>' !!}
+									<input type="checkbox" wire:model="users.{{ $loop->index }}.view" @if($user->hasAllPermissions()) disabled @endif/>
 								</td>
 								<td class="text-center">
-									{!! $user->canUpload() ? '<em class="fas fa-check text-green-500"></em>' : '<em class="fas fa-times text-red-500"></em>' !!}
+									<input type="checkbox" wire:model="users.{{ $loop->index }}.invite" @if($user->hasAllPermissions()) disabled @endif/>
 								</td>
 								<td class="text-center">
-									{!! $user->canEdit() ? '<em class="fas fa-check text-green-500"></em>' : '<em class="fas fa-times text-red-500"></em>' !!}
+									<input type="checkbox" wire:model="users.{{ $loop->index }}.upload" @if($user->hasAllPermissions()) disabled @endif/>
 								</td>
 								<td class="text-center">
-									{!! $user->canDelete() ? '<em class="fas fa-check text-green-500"></em>' : '<em class="fas fa-times text-red-500"></em>' !!}
+									<input type="checkbox" wire:model="users.{{ $loop->index }}.edit" @if($user->hasAllPermissions()) disabled @endif/>
+								</td>
+								<td class="text-center">
+									<input type="checkbox" wire:model="users.{{ $loop->index }}.delete" @if($user->hasAllPermissions()) disabled @endif/>
+								</td>
+								<td class="text-center">
+									<x-button size="small" wire:click="edit({{ $user }})">Edit</x-button>
 								</td>
 							</tr>
 						@endforeach

@@ -150,4 +150,9 @@ class User extends Authenticatable
 		$permissions = $this->getPermissions();
 		return $permissions->contains('*') ? true : $permissions->contains($permission);
 	}
+
+	public function hasAllPermissions()
+	{
+		return $this->getPermissions()->contains('*');
+	}
 }
