@@ -1,5 +1,10 @@
 <div>
 	@if($hasFamily)
+		<!-- options -->
+		<div class="flex justify-end mb-5 px-6 sm:px-0">
+			<a href="{{ route('album.index') }}"><x-secondary-button class="rounded-r-none">{{ __('album/index.title') }}</x-secondary-button></a>
+			<a href="{{ route('album.create') }}"><x-button class="rounded-l-none">{{ __('album/create.title') }}</x-button></a>
+		</div>
 		<!-- albums -->
 		@if($albums->count() === 0)
 			<x-card>
@@ -15,11 +20,6 @@
 				</x-slot>
 			</x-card>
 		@else
-			<!-- options -->
-			<div class="flex justify-end mb-5 px-6 sm:px-0">
-				<a href="{{ route('album.index') }}"><x-secondary-button class="rounded-r-none">{{ __('album/index.title') }}</x-secondary-button></a>
-				<a href="{{ route('album.create') }}"><x-button class="rounded-l-none">{{ __('album/create.title') }}</x-button></a>
-			</div>
 			<!-- list -->
 			<div class="gap-5 grid grid-cols-2 md:grid-cols-4">
 				@foreach($albums as $album)
@@ -41,7 +41,11 @@
 				@endforeach
 			</div>
 		@endif
-		<br />
+		<!-- options -->
+		<div class="flex justify-end my-5 px-6 sm:px-0">
+			<a href="{{ route('member.index') }}"><x-secondary-button class="rounded-r-none">{{ __('member/index.title') }}</x-secondary-button></a>
+			<a href="{{ route('member.create') }}"><x-button class="rounded-l-none">{{ __('member/create.title') }}</x-button></a>
+		</div>
 		<!-- members -->
 		@if($members->count() === 0)
 			<x-card>
@@ -57,11 +61,6 @@
 				</x-slot>
 			</x-card>
 		@else
-			<!-- options -->
-			<div class="flex justify-end mb-5 px-6 sm:px-0">
-				<a href="{{ route('member.index') }}"><x-secondary-button class="rounded-r-none">{{ __('member/index.title') }}</x-secondary-button></a>
-				<a href="{{ route('member.create') }}"><x-button class="rounded-l-none">{{ __('member/create.title') }}</x-button></a>
-			</div>
 			<!-- list -->
 			<div class="gap-5 grid grid-cols-2 md:grid-cols-4">
 				@foreach($members as $member)
