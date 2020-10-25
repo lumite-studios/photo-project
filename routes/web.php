@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Dashboard\IndexController as DashboardIndexController;
 use App\Http\Controllers\Family\CreateController as FamilyCreateController;
 use App\Http\Controllers\IndexController;
+use App\Http\Controllers\Member\IndexController as MemberIndexController;
 use App\Http\Controllers\Member\ShowController as MemberShowController;
 use App\Mail\InviteToFamily;
 use Illuminate\Support\Facades\Route;
@@ -54,7 +55,7 @@ Route::group(['middleware' => 'auth'], function() {
 	});
 	// member
 	Route::group(['as' => 'member.', 'prefix' => 'member'], function() {
-		Route::get('/', AlbumCreateController::class)->name('index');
+		Route::get('/', MemberIndexController::class)->name('index');
 		Route::get('/create', AlbumCreateController::class)->name('create');
 		Route::get('/{member_id}', MemberShowController::class)->name('show');
 	});

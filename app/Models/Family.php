@@ -48,6 +48,11 @@ class Family extends Model
 					});
 	}
 
+	/**
+	 * Get the albums without unsorted.
+	 *
+	 * @return array
+	 */
 	public function albumsWithoutUnsorted()
 	{
 		return $this->hasMany(Album::class)

@@ -9,6 +9,12 @@ class IndexController extends Component
 	use WithPagination;
 
 	/**
+	 * The amount to paginate by.
+	 * @var integer
+	 */
+	private $amount = 8;
+
+	/**
 	 * Render the livewire component.
 	 */
 	public function render()
@@ -20,8 +26,11 @@ class IndexController extends Component
 			]);
 	}
 
+	/**
+	 * Get the albums as a computed property.
+	 */
 	public function getAlbumsProperty()
 	{
-		return auth()->user()->currentFamily->albumsWithOptionalUnsorted()->orderBy('updated_at', 'DESC')->paginate(6);
+		return auth()->user()->currentFamily->albumsWithOptionalUnsorted()->orderBy('updated_at', 'DESC')->paginate($this->amount);
 	}
 }
