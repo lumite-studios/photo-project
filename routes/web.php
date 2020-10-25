@@ -45,9 +45,9 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::post('/logout', [LoginController::class, 'delete'])->name('logout');
 	// family
 	Route::group(['as' => 'family.', 'prefix' => 'family'], function() {
-		// create
+		Route::get('/', MemberShowController::class)->name('index');
 		Route::get('/create', FamilyCreateController::class)->name('create');
-		Route::get('/{family_id}', MemberShowController::class)->name('show');
+		Route::get('/{family_id}', FamilyCreateController::class)->name('update');
 	});
 	// album
 	Route::group(['as' => 'album.', 'prefix' => 'album'], function() {

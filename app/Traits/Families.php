@@ -66,6 +66,17 @@ trait Families
 	}
 
 	/**
+	 * Check if a family is this users current family.
+	 *
+	 * @param Family $family
+	 * @return boolean
+	 */
+	public function isCurrentFamily(Family $family)
+	{
+        return $family->id === $this->currentFamily->id;
+	}
+
+	/**
 	 * Switch the user's current family.
 	 *
 	 * @param Family $family

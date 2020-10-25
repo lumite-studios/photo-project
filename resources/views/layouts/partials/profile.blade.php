@@ -8,26 +8,29 @@
 
 		<x-slot name="content">
 			<!-- manage account -->
-			<x-dropdown-title>{{ __('Manage Account') }}</x-dropdown-title>
+			<x-dropdown-title>{{ __('navigation.profile.manage-account') }}</x-dropdown-title>
 			<x-dropdown-link href="{{ route('album.index') }}">
 				{{ __('profile/index.title') }}
-			</x-jet-dropdown-link>
-			<div class="border-t border-gray-100"></div>
+			</x-dropdown-link>
+			<div class="border-t border-gray-200"></div>
 			<!-- manage families -->
-			<x-dropdown-title>{{ __('Manage families') }}</x-dropdown-title>
+			<x-dropdown-title>{{ __('navigation.profile.manage-families') }}</x-dropdown-title>
 			@if(auth()->user()->hasFamily())
-				<x-dropdown-link href="{{ route('family.show', ['family_id' => auth()->user()->currentFamily->id]) }}">
+				<x-dropdown-link href="{{ route('family.index') }}">
 					{{ __('family/show.title') }}
 				</x-dropdown-link>
 			@endif
 			<x-dropdown-link href="{{ route('family.create') }}">
 				{{ __('family/create.title') }}
 			</x-dropdown-link>
-			<div class="border-t border-gray-100"></div>
+			<div class="border-t border-gray-200"></div>
 			<!-- switch family -->
 			@if(auth()->user()->hasFamily())
-				<x-dropdown-title>{{ __('switch family') }}</x-dropdown-title>
-                <div class="border-t border-gray-100"></div>
+				<x-dropdown-title>{{ __('navigation.profile.switch-family') }}</x-dropdown-title>
+                @foreach (auth()->user()->families as $family)
+					<x-switch-family :family="$family"></x-switch-family>
+				@endforeach
+                <div class="border-t border-gray-200"></div>
 			@endif
 			<!-- logout -->
 			<form method="POST" action="{{ route('logout') }}">

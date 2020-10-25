@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Family;
 
 use App\Mail\InviteToFamily;
 use App\Models\Family;
+use App\Models\Member;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Livewire\Component;
@@ -103,6 +104,9 @@ class CreateController extends Component
 
 			Mail::to($email)->send(new InviteToFamily($family->name, $code));
 		}
+
+		auth()->user()->switchFamily($family);
+		$family->members()->firstOrCreate(['name' => auth()->user()->name]);
 
 		return redirect()->route('dashboard');
 	}

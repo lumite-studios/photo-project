@@ -27,7 +27,7 @@ return [
 				'submit' => 'Create',
 			],
 			'section' => [
-				'description' => 'desc',
+				'description' => '',
 				'title' => 'Family Details',
 			],
 		],

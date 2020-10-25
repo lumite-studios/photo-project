@@ -39,8 +39,6 @@ class RegisterController extends Controller
 			'password' => Hash::make($data['password']),
 		]);
 
-		Member::firstOrCreate(['name' => $user->name]);
-
 		return redirect()->route('auth.login');
 	}
 }
