@@ -15,7 +15,7 @@ class InitialUserSeeder extends Seeder
      */
     public function run()
     {
-		if($user = User::where('email', '=', config('app.initial_user_email')->first()))
+		if($user = User::where('email', '=', config('app.initial_user_email'))->first())
 		{
 			return;
 		}
