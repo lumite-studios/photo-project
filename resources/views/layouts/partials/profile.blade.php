@@ -15,12 +15,12 @@
 			<div class="border-t border-gray-200"></div>
 			<!-- manage families -->
 			<x-dropdown-title>{{ __('navigation.profile.manage-families') }}</x-dropdown-title>
-			@if(auth()->user()->hasFamily())
+			@if(auth()->user()->hasFamily() && auth()->user()->canAdmin())
 				<x-dropdown-link href="{{ route('family.index') }}">
 					{{ __('family/index.title') }}
 				</x-dropdown-link>
 			@endif
-			<x-dropdown-link href="{{ route('family.create') }}">
+			<x-dropdown-link href="{{ route('family.create') }}"> photo_project
 				{{ __('family/create.title') }}
 			</x-dropdown-link>
 			<div class="border-t border-gray-200"></div>
