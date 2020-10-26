@@ -33,20 +33,23 @@
 			</x-button>
 		</x-slot>
 	</x-form-section>
-	<!-- danger zone -->
-	<x-form-section submit="delete">
-		<x-slot name="title"><span class="text-red-500">{{ __('album/show.form.edit-album.danger-zone.section.title') }}</span></x-slot>
-		<x-slot name="description"><span class="text-red-600">{{ __('album/show.form.edit-album.danger-zone.section.description') }}</span></x-slot>
-		<x-slot name="form">
-			<div class="flex items-center">
-				<div class="flex-grow text-gray-500">{{ __('album/show.form.edit-album.danger-zone.delete-album.title') }}</div>
-				<x-button disabled wire:loading wire:target="delete">
-					<em class="fas fa-circle-notch fa-spin"></em>
-				</x-button>
-				<x-danger-button wire:loading.remove wire:target="delete">
-					{{ __('album/show.form.edit-album.danger-zone.delete-album.submit') }}
-				</x-danger-button>
-			</div>
-		</x-slot>
-	</x-form-section>
+
+	@if(auth()->user()->canDelete())
+		<!-- danger zone -->
+		<x-form-section submit="delete">
+			<x-slot name="title"><span class="text-red-500">{{ __('album/show.form.edit-album.danger-zone.section.title') }}</span></x-slot>
+			<x-slot name="description"><span class="text-red-600">{{ __('album/show.form.edit-album.danger-zone.section.description') }}</span></x-slot>
+			<x-slot name="form">
+				<div class="flex items-center">
+					<div class="flex-grow text-gray-500">{{ __('album/show.form.edit-album.danger-zone.delete-album.title') }}</div>
+					<x-button disabled wire:loading wire:target="delete">
+						<em class="fas fa-circle-notch fa-spin"></em>
+					</x-button>
+					<x-danger-button wire:loading.remove wire:target="delete">
+						{{ __('album/show.form.edit-album.danger-zone.delete-album.submit') }}
+					</x-danger-button>
+				</div>
+			</x-slot>
+		</x-form-section>
+	@endif
 </div>

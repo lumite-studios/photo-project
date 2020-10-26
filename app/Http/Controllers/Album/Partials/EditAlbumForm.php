@@ -50,19 +50,22 @@ class EditAlbumForm extends Component
 	 */
 	public function update()
 	{
-		$this->validate([
-			'state' => 'array|required',
-			'state.name' => 'required|string',
-			'state.description' => 'nullable|string',
-			'state.duplicate_check' => 'boolean',
-		]);
+		if(auth()->user()->canEdit())
+		{
+			$this->validate([
+				'state' => 'array|required',
+				'state.name' => 'required|string',
+				'state.description' => 'nullable|string',
+				'state.duplicate_check' => 'boolean',
+			]);
 
-		$this->album->name = $this->state['name'];
-		$this->album->description = $this->state['description'];
-		$this->album->duplicate_check = $this->state['duplicate_check'];
-		$this->album->save();
+			$this->album->name = $this->state['name'];
+			$this->album->description = $this->state['description'];
+			$this->album->duplicate_check = $this->state['duplicate_check'];
+			$this->album->save();
 
-		$this->emit('refreshAlbum');
+			$this->emit('refreshAlbum');
+		}
 	}
 
 	/**
@@ -70,15 +73,18 @@ class EditAlbumForm extends Component
 	 */
 	public function delete()
 	{
-		$unsorted = Album::where('editable', '=', false)->first();
-
-		foreach($this->album->photos as $photo)
+		if(auth()->user()->canDelete())
 		{
-			$photo->album()->associate($unsorted);
-			$photo->save();
-		}
+			$unsorted = Album::where('editable', '=', false)->first();
 
-		Album::where('id', '=', $this->album->id)->first()->delete();
-		return redirect()->route('album.index');
+			foreach($this->album->photos as $photo)
+			{
+				$photo->album()->associate($unsorted);
+				$photo->save();
+			}
+
+			Album::where('id', '=', $this->album->id)->first()->delete();
+			return redirect()->route('album.index');
+		}
 	}
 }

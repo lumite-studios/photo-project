@@ -26,6 +26,12 @@ class ShowController extends Component
 	public $availableAlbums = [];
 
 	/**
+	 * Whether the album can be edited.
+	 * @var boolean
+	 */
+	public $canEdit = false;
+
+	/**
 	 * Whether the album can have photos uploaded.
 	 * @var boolean
 	 */
@@ -72,7 +78,8 @@ class ShowController extends Component
 	{
 		$this->album = auth()->user()->currentFamily->albums()->where('slug', '=', $album_slug)->first();
 		$this->availableAlbums = auth()->user()->currentFamily->albumsWithoutUnsorted()->where('id', '!=', $this->album->id)->get();
-		$this->canUpload = $this->album->editable;
+		$this->canEdit = $this->album->editable && auth()->user()->canEdit();
+		$this->canUpload = $this->album->editable && auth()->user()->canUpload();
 		$this->selectedPhotos = collect();
 	}
 

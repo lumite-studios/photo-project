@@ -126,7 +126,7 @@ class User extends Authenticatable
 	 */
 	public function canView()
 	{
-		return $this->hasPermission('view');
+		return true;
 	}
 
 	/**

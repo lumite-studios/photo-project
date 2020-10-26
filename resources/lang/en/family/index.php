@@ -24,7 +24,7 @@ return [
 		],
 		'users' => [
 			'section' => [
-				'description' => 'Current and invited users.',
+				'description' => 'Users who have access to this family.',
 				'title' => 'Users',
 			],
 			'table' => [

@@ -66,16 +66,18 @@
 		</div>
 		<div class="flex-grow"></div>
 		<!-- options -->
-		<x-secondary-button class="{{ $canUpload ? 'rounded-r-none' : null }}" wire:click="toggleEditing" wire:target="toggleEditing" wire:loading.attr="disabled">
-			<span wire:loading wire:target="toggleEditing"><em class="fas fa-circle-notch fa-spin"></em></span>
-			<span wire:loading.remove wire:target="toggleEditing">
-				@if($editing)
-					{{ __('album/show.links.view-album') }}
-				@else
-					{{ __('album/show.links.edit-album') }}
-				@endif
-			</span>
-		</x-secondary-button>
+		@if($canEdit)
+			<x-secondary-button class="{{ $canUpload ? 'rounded-r-none' : null }}" wire:click="toggleEditing" wire:target="toggleEditing" wire:loading.attr="disabled">
+				<span wire:loading wire:target="toggleEditing"><em class="fas fa-circle-notch fa-spin"></em></span>
+				<span wire:loading.remove wire:target="toggleEditing">
+					@if($editing)
+						{{ __('album/show.links.view-album') }}
+					@else
+						{{ __('album/show.links.edit-album') }}
+					@endif
+				</span>
+			</x-secondary-button>
+		@endif
 		@if($canUpload)
 			<x-button class="rounded-l-none" wire:click="toggleUploadingPhotosModal()">
 				{{ __('album/show.links.upload-photos') }}
@@ -84,7 +86,7 @@
 	</div>
 
 	<!-- view -->
-	@if($editing)
+	@if($editing && $canEdit)
 		@livewire('album.partials.edit-album', ['album' => $album])
 	@else
 		@livewire('album.partials.view-album', ['album' => $album])

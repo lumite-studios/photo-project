@@ -64,10 +64,12 @@
 		</x-secondary-button>
 	@endif
 
-	<hr class="my-10" />
-	<div id="edit-member-form">
-		@livewire('member.partials.edit-member-form', ['member' => $member])
-	</div>
+	@if(auth()->user()->canEdit())
+		<hr class="my-10" />
+		<div id="edit-member-form">
+			@livewire('member.partials.edit-member-form', ['member' => $member])
+		</div>
+	@endif
 
 	<!-- viewing photo modal -->
 	<x-dialog-modal wire:model="showViewingPhotoModal">
