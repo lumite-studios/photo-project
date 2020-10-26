@@ -131,7 +131,7 @@ class ShowController extends Component
 		foreach($this->state['photos'] as $photo)
 		{
 			// set variables
-			$temp_path = config('livewire.temporary_file_upload.directory').'\\'.$photo->getFilename();
+			$temp_path = config('livewire.temporary_file_upload.directory').'/'.$photo->getFilename();
 			$name = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
 			$slug = Str::slug($name)."-".time().'.'.$photo->getClientOriginalExtension();
 			$path = $this->album->slug.'/'.$slug;
@@ -155,7 +155,7 @@ class ShowController extends Component
 			$_photo->name = $name;
 			$_photo->path = $path;
 			$_photo->signature = $signature;
-			$_photo->temp_path = str_replace('public', '', $temp_path);
+			$_photo->temp_path = str_replace('public/', '', $temp_path);
 
 			// are we NOT checking for duplicates?
 			// or is the photo not a duplicate
