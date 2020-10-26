@@ -136,7 +136,7 @@ class User extends Authenticatable
 	 */
 	public function getPermissions()
 	{
-		return collect(json_decode($this->families()->where('families.id', '=', $this->currentFamily->id)->first()->pivot->permissions));
+		return collect(json_decode($this->family()->pivot->permissions));
 	}
 
 	/**
@@ -151,8 +151,59 @@ class User extends Authenticatable
 		return $permissions->contains('*') ? true : $permissions->contains($permission);
 	}
 
+	/**
+	 * Check if the user has all permissions.
+	 *
+	 * @return boolean
+	 */
 	public function hasAllPermissions()
 	{
 		return $this->getPermissions()->contains('*');
+	}
+
+	/**
+	 * Set a permission.
+	 *
+	 * @param string $permission
+	 * @return void
+	 */
+	public function setPermission(string $permission)
+	{
+		if(!$this->hasPermission($permission))
+		{
+			$permissions = $this->getPermissions();
+			$permissions->push($permission);
+			$this->setPermissions($permissions->toArray());
+		}
+	}
+
+	/**
+	 * Unset a permission.
+	 *
+	 * @param string $permission
+	 * @return void
+	 */
+	public function unsetPermission(string $permission)
+	{
+		if($this->hasPermission($permission))
+		{
+			$permissions = $this->getPermissions()->filter(function($value) use($permission) {
+				return $value !== $permission;
+			});
+			$this->setPermissions($permissions->toArray());
+		}
+	}
+
+	/**
+	 * Set the permissions attribute.
+	 *
+	 * @param array $permissions
+	 * @return void
+	 */
+	private function setPermissions(array $permissions)
+	{
+		$family = $this->family();
+		$family->pivot->permissions = json_encode($permissions);
+		$family->pivot->save();
 	}
 }

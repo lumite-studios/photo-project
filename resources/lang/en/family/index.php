@@ -35,7 +35,8 @@ return [
 				'upload' => 'Upload?',
 				'edit' => 'Edit?',
 				'delete' => 'Delete?',
-			]
+			],
+			'submit' => 'Edit',
 		],
 	],
 
@@ -49,5 +50,7 @@ return [
 
 	'text' => [
 		'subtitle' => '',
+		'success-edit' => 'Successfully edited a users permissions!',
+		'success-update' => 'Successfully updated the family details!',
 	],
 ];

@@ -63,7 +63,12 @@
 									<input type="checkbox" wire:model="users.{{ $loop->index }}.admin" @if($user->hasAllPermissions()) disabled @endif/>
 								</td>
 								<td class="text-center">
-									<x-button size="small" wire:click="edit({{ $user }})">Edit</x-button>
+									<x-button size="small" disabled wire:loading wire:target="edit">
+										<em class="fas fa-circle-notch fa-spin"></em>
+									</x-button>
+									<x-button size="small" wire:loading.remove wire:click="edit({{ $user }})" wire:target="edit">
+										{{ __('family/index.form.users.submit') }}
+									</x-button>
 								</td>
 							</tr>
 						@endforeach

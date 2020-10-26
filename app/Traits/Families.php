@@ -55,6 +55,11 @@ trait Families
 						->withTimestamps();
 	}
 
+	public function family()
+	{
+		return $this->families()->where('families.id', '=', $this->currentFamily->id)->first();
+	}
+
 	/**
 	 * Check if the user has a family.
 	 *

@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Family;
 
+use App\Models\User;
 use Livewire\Component;
 
 class IndexController extends Component
@@ -19,6 +20,10 @@ class IndexController extends Component
 	 */
 	public $users;
 
+	/**
+	 * The rules for the properties.
+	 * @var array
+	 */
     protected $rules = [
         'users.*.admin' => ['boolean', 'required'],
         'users.*.view' => ['boolean', 'required'],
@@ -58,13 +63,44 @@ class IndexController extends Component
 			]);
 	}
 
+	/**
+	 * Update the family details.
+	 */
 	public function update()
 	{
+		if(auth()->user()->canAdmin())
+		{
+			$this->validate([
+				'state' => ['array', 'required'],
+				'state.name' => ['max:255', 'required', 'string'],
+			]);
 
+			$family = auth()->user()->currentFamily;
+			$family->name = $this->state['name'];
+			$family->save();
+
+			$this->emit('toast', __('family/index.text.success-update'), 'success');
+		}
 	}
 
-	public function edit($user)
+	/**
+	 * Edit a user's permissions.
+	 *
+	 * @param array $user
+	 */
+	public function edit(array $_user)
 	{
-		dd($user);
+		if(auth()->user()->canAdmin())
+		{
+			$user = User::where('id', '=', $_user['id'])->first();
+			$_user['view'] ? $user->setPermission('view') : $user->unsetPermission('view');
+			$_user['invite'] ? $user->setPermission('invite') : $user->unsetPermission('invite');
+			$_user['upload'] ? $user->setPermission('upload') : $user->unsetPermission('upload');
+			$_user['edit'] ? $user->setPermission('edit') : $user->unsetPermission('edit');
+			$_user['delete'] ? $user->setPermission('delete') : $user->unsetPermission('delete');
+			$_user['admin'] ? $user->setPermission('admin') : $user->unsetPermission('admin');
+
+			$this->emit('toast', __('family/index.text.success-edit'), 'success');
+		}
 	}
 }
