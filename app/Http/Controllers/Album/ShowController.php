@@ -155,7 +155,7 @@ class ShowController extends Component
 			$_photo->name = $name;
 			$_photo->path = $path;
 			$_photo->signature = $signature;
-			$_photo->temp_path = str_replace('public\\', '', $temp_path);
+			$_photo->temp_path = str_replace('public/', '', $temp_path);
 
 			// are we NOT checking for duplicates?
 			// or is the photo not a duplicate
