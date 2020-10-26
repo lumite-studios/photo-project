@@ -170,4 +170,17 @@ class IndexController extends Component
 		$this->family->refresh();
 		$this->setInvites();
 	}
+
+	/**
+	 * Remove an invite.
+	 *
+	 * @param string $invite
+	 */
+	public function removeInvite(string $invite = null)
+	{
+		$invite = $this->family->invites()->where('email', '=', $invite)->first();
+		$invite->delete();
+
+		$this->emit('toast', 'Deleted Invite', 'success');
+	}
 }
