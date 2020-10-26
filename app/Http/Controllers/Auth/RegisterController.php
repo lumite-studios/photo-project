@@ -15,8 +15,18 @@ class RegisterController extends Controller
 	 *
 	 * @return view
 	 */
-	public function index()
+	public function index(Request $request)
 	{
+		// is info is supplied, fill the form
+		if($request->has('email'))
+		{
+			session(['_old_input.email_address' => $request->input('email')]);
+		}
+		if($request->has('code'))
+		{
+			session(['_old_input.invite_code' => $request->input('code')]);
+		}
+
 		return view('auth.register');
 	}
 
@@ -59,9 +69,12 @@ class RegisterController extends Controller
 
 		if($invite !== null)
 		{
-
+			$invite->family->users()->attach($user->id, ['permissions' => $invite->permissions]);
+			$invite->delete();
 		}
 
-		return redirect()->route('auth.login');
+		auth()->attempt(['email_address' => $user->email_address, 'password' => $data['password']], true);
+
+		return redirect()->route('dashboard');
 	}
 }

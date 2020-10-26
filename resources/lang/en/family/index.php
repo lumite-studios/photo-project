@@ -49,6 +49,7 @@ return [
 	],
 
 	'text' => [
+		'error-invite' => 'An invite to that email address has already been sent!',
 		'subtitle' => '',
 		'success-edit' => 'Successfully edited a users permissions!',
 		'success-update' => 'Successfully updated the family details!',

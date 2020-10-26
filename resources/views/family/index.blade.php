@@ -26,6 +26,7 @@
 		<x-slot name="title">{{ __('family/index.form.users.section.title') }}</x-slot>
 		<x-slot name="description">{{ __('family/index.form.users.section.description') }}</x-slot>
 		<x-slot name="form">
+			<!-- list users -->
 			<div class="overflow-x-auto">
 				<table>
 					<thead>
@@ -74,6 +75,34 @@
 						@endforeach
 					</tbody>
 				</table>
+			</div>
+			<!-- invites -->
+			<div class="border border-gray-400 mt-5 overflow-hidden rounded-md">
+				@if(auth()->user()->canInvite())
+					<div class="flex">
+						<x-input class="border-b-0 border-l-0 border-r-0 border-t-0 flex-grow rounded-none" name="invites" type="email" placeholder="{{ __('family/create.text.details.form.invites.placeholder') }}" wire:model="state.invite" />
+						<x-button class="rounded-b-none rounded-l-none" disabled wire:loading wire:target="sendInvite">
+							<em class="fas fa-circle-notch fa-spin"></em>
+						</x-button>
+						<x-button class="rounded-b-none rounded-l-none" wire:click.prevent="sendInvite" wire:loading.remove wire:target="sendInvite">
+							{{ __('family/create.text.details.form.invites.submit') }}
+						</x-danger-button>
+					</div>
+				@endif
+				<div class="bg-gray-100 border-gray-400 @if(auth()->user()->canInvite()) border-t @endif px-3 py-2 shadow-sm w-full">
+					@if(count($invites) !== 0)
+						@foreach($invites as $invite)
+							<div class="flex items-center space-x-3">
+								<button class="cursor-pointer font-bold text-red-500" wire:click.prevent="removeInvite('{{ $invite }}')">
+									<em class="fas fa-times"></em>
+								</button>
+								<div class="flex-grow text-gray-600 text-sm">{{ $invite }}</div>
+							</div>
+						@endforeach
+					@else
+						<div class="text-center text-sm">{{ __('family/create.text.details.form.invites.none') }}</div>
+					@endif
+				</div>
 			</div>
 		</x-slot>
 	</x-form-section>

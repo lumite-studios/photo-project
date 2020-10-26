@@ -1,18 +1,24 @@
 <?php
 namespace App\Http\Controllers\Family;
 
+use App\Mail\InviteToFamily;
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use Livewire\Component;
 
 class IndexController extends Component
 {
 	public $family;
 
+	public $invites;
+
 	/**
 	 * The form state.
 	 * @var array
 	 */
 	public $state = [
+		'invite' => null,
 		'name' => null,
 	];
 
@@ -41,20 +47,18 @@ class IndexController extends Component
 	public function mount()
 	{
 		$this->family = auth()->user()->currentFamily;
-		if($this->family !== null)
+		$this->setInvites();
+		$this->state['name'] = $this->family->name;
+		$this->users = $this->family->users->map(function($user)
 		{
-			$this->state['name'] = $this->family->name;
-			$this->users = $this->family->users->map(function($user)
-			{
-				$user['admin'] = $user->canAdmin();
-				$user['view'] = $user->canView();
-				$user['invite'] = $user->canInvite();
-				$user['upload'] = $user->canUpload();
-				$user['edit'] = $user->canEdit();
-				$user['delete'] = $user->canDelete();
-				return $user;
-			});
-		}
+			$user['admin'] = $user->canAdmin();
+			$user['view'] = $user->canView();
+			$user['invite'] = $user->canInvite();
+			$user['upload'] = $user->canUpload();
+			$user['edit'] = $user->canEdit();
+			$user['delete'] = $user->canDelete();
+			return $user;
+		});
 	}
 
 	/**
@@ -130,5 +134,40 @@ class IndexController extends Component
 
 			return redirect()->route('dashboard');
 		}
+	}
+
+	/**
+	 * Set the invites from the family.
+	 */
+	private function setInvites()
+	{
+		$this->invites = $this->family->invites->map(function($value)
+		{
+			return $value->email;
+		});
+	}
+
+	/**
+	 * Send an invite.
+	 */
+	public function sendInvite()
+	{
+		if($this->family->invites()->where('email', '=', $this->state['invite'])->first())
+		{
+			$this->emit('toast', __('family/index.text.error-invite'), 'error');
+			return;
+		}
+
+		$code = Str::random(15);
+		$this->family->invites()->create([
+			'email' => $this->state['invite'],
+			'code' => $code,
+		]);
+
+		Mail::to($this->state['invite'])->send(new InviteToFamily($this->family->name, $code));
+
+		$this->state['invite'] = null;
+		$this->family->refresh();
+		$this->setInvites();
 	}
 }
