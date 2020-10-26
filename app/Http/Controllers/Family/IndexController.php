@@ -181,6 +181,8 @@ class IndexController extends Component
 		$invite = $this->family->invites()->where('email', '=', $invite)->first();
 		$invite->delete();
 
+		$this->family->refresh();
+		$this->setInvites();
 		$this->emit('toast', 'Deleted Invite', 'success');
 	}
 }
