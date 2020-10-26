@@ -4,6 +4,7 @@ return [
 
 	'form' => [
 		'email_address' => 'Email Address',
+		'invite_code' => 'Invite Code',
 		'name' => 'Full Name',
 		'password' => 'Password',
 		'password_confirmation' => 'Confirm Password',

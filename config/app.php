@@ -13,6 +13,7 @@ return [
     |
     */
 
+	'invite_code' => env('INVITE_CODE'),
     'name' => env('APP_NAME', 'Laravel'),
 
     /*

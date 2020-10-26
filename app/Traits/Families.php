@@ -55,6 +55,11 @@ trait Families
 						->withTimestamps();
 	}
 
+	/**
+	 * Fetch the users current family with the pivot data.
+	 *
+	 * @return object
+	 */
 	public function family()
 	{
 		return $this->families()->where('families.id', '=', $this->current_family_id)->first();
@@ -79,6 +84,17 @@ trait Families
 	public function isCurrentFamily(Family $family)
 	{
         return $family->id === $this->currentFamily->id;
+	}
+
+	/**
+	 * Join a family.
+	 *
+	 * @param Family $family
+	 * @return boolean
+	 */
+	public function joinFamily(Family $family, array $permissions = ['view'])
+	{
+		return $family->users()->attach($this->id, ['permissions' => json_encode($permissions)]);
 	}
 
 	/**

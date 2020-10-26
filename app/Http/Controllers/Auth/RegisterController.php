@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Invite;
 use App\Models\Member;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -29,15 +30,37 @@ class RegisterController extends Controller
 	{
 		$data = $request->validate([
 			'name' => ['max:255', 'required', 'string'],
+			'invite_code' => ['filled', 'size:15', function($attribute, $value, $fail) {
+				if(config('app.invite_code'))
+				{
+					return $value !== null;
+				}
+			}],
 			'email_address' => ['max:255', 'email', 'required', 'unique:users,email_address'],
 			'password' => ['confirmed', 'min:8', 'required'],
 		]);
+
+		$invite = null;
+
+		if(array_key_exists('invite_code', $data))
+		{
+			$invite = Invite::where('email', '=', $data['email_address'])->where('code', '=', $data['invite_code'])->first();
+			if(!$invite)
+			{
+				return redirect()->back()->withErrors(['incorrect_code' => __('validation.custom.incorrect_code')])->withInput();
+			}
+		}
 
 		$user = User::create([
 			'name' => $data['name'],
 			'email_address' => $data['email_address'],
 			'password' => Hash::make($data['password']),
 		]);
+
+		if($invite !== null)
+		{
+
+		}
 
 		return redirect()->route('auth.login');
 	}

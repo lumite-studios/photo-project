@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use App\Models\Album;
+use App\Models\Invite;
 use App\Models\Member;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -57,6 +58,16 @@ class Family extends Model
 	{
 		return $this->hasMany(Album::class)
 					->where('editable', '=', 1);
+	}
+
+	/**
+	 * Fetch the invites this family has sent out.
+	 *
+	 * @return array
+	 */
+	public function invites()
+	{
+		return $this->hasMany(Invite::class);
 	}
 
 	/**

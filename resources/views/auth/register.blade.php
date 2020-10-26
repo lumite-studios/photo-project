@@ -8,24 +8,30 @@
 					<x-validation-errors class="mb-3" />
 					<!-- name -->
 					<div class="mb-3">
-						<x-label for="name">{{ __('auth/register.form.name') }}</x-label>
-						<x-input name="name" type="text" />
+						<x-label for="name">{{ __('auth/register.form.name') }} *</x-label>
+						<x-input name="name" type="text" value="{{ old('name') }}" />
 					</div>
 					<!-- email address -->
 					<div class="mb-3">
-						<x-label for="email_address">{{ __('auth/register.form.email_address') }}</x-label>
-						<x-input name="email_address" type="text" />
+						<x-label for="email_address">{{ __('auth/register.form.email_address') }} *</x-label>
+						<x-input name="email_address" type="text" value="{{ old('email_address') }}" />
 					</div>
 					<!-- password -->
 					<div class="mb-3">
-						<x-label for="password">{{ __('auth/register.form.password') }}</x-label>
+						<x-label for="password">{{ __('auth/register.form.password') }} *</x-label>
 						<x-input name="password" type="password" />
 					</div>
 					<!-- confirm password -->
 					<div>
-						<x-label for="password_confirmation">{{ __('auth/register.form.password_confirmation') }}</x-label>
+						<x-label for="password_confirmation">{{ __('auth/register.form.password_confirmation') }} *</x-label>
 						<x-input name="password_confirmation" type="password" />
 					</div>
+					@if(config('app.invite_code'))
+						<div class="mt-3">
+							<x-label for="invite_code">{{ __('auth/register.form.invite_code') }} *</x-label>
+							<x-input name="invite_code" type="text" value="{{ old('invite_code') }}" />
+						</div>
+					@endif
 				</x-slot>
 				<x-slot name="footer">
 					<div class="flex-grow">

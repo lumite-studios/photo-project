@@ -132,6 +132,7 @@ return [
     */
 
     'custom' => [
+		'incorrect_code' => 'The Invite Code you have supplied was not correct.',
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
