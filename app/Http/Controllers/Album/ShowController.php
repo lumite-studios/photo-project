@@ -1,9 +1,11 @@
 <?php
 namespace App\Http\Controllers\Album;
 
+use App\Jobs\UploadPhoto;
 use App\Models\Album;
 use App\Models\Photo;
 use App\Traits\DisplayPhotosOptions;
+use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -122,12 +124,14 @@ class ShowController extends Component
             'state.photos.*' => ['image'],
 		]);
 
+		$batches = [];
 		$driver = config('filesystems.default');
 		$duplicates = collect();
 
 		foreach($this->state['photos'] as $photo)
 		{
 			// set variables
+			$temp_path = config('livewire.temporary_file_upload.directory').'\\'.$photo->getFilename();
 			$name = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
 			$slug = Str::slug($name)."-".time().'.'.$photo->getClientOriginalExtension();
 			$path = $this->album->slug.'/'.$slug;
@@ -145,31 +149,33 @@ class ShowController extends Component
 			$image->readImageBlob($photo->get());
 			$signature = $image->getImageSignature();
 
-			// store it
-			$driver === 'local' ? $photo->storeAs('public/'.$this->album->slug, $slug) : $photo->storePubliclyAs($this->album->slug, $slug);
-
 			// create the photo
-			$photo = new Photo;
-			$photo->date_taken = $dateTaken;
-			$photo->name = $name;
-			$photo->path = $path;
-			$photo->signature = $signature;
+			$_photo = new Photo;
+			$_photo->date_taken = $dateTaken;
+			$_photo->name = $name;
+			$_photo->path = $path;
+			$_photo->signature = $signature;
+			$_photo->temp_path = str_replace('public\\', '', $temp_path);
 
 			// are we NOT checking for duplicates?
 			// or is the photo not a duplicate
-			if(!$this->album->duplicate_check)
+			if(!$this->album->duplicate_check || ($this->album->duplicate_check && !$_photo->isDuplicate()))
 			{
-				$this->album->photos()->create($photo->toArray());
-			} else
-			{
-				if(!$photo->isDuplicate())
+				$_photo = $this->album->photos()->create($_photo->toArray());
+
+				// store it
+				if($driver === 'local')
 				{
-					$this->album->photos()->create($photo->toArray());
+					$photo->storeAs('public/'.$this->album->slug, $slug);
 				} else
 				{
-					$duplicates->push($photo->name);
+					$batches[] = new UploadPhoto($_photo, $slug, $temp_path);
 				}
+			} else
+			{
+				$duplicates->push($_photo->name);
 			}
+
 		}
 
 		if($duplicates->count() > 0)
@@ -183,6 +189,8 @@ class ShowController extends Component
 			$error .= '</ul>';
 			$this->emit('toast', $error, 'error');
 		}
+
+		Bus::batch($batches)->onQueue('uploads')->dispatch();
 
 		$this->showUploadingPhotosModal = false;
 		$this->emit('refreshAlbum');

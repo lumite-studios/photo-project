@@ -20,7 +20,7 @@
 					{{ __('family/index.title') }}
 				</x-dropdown-link>
 			@endif
-			<x-dropdown-link href="{{ route('family.create') }}"> photo_project
+			<x-dropdown-link href="{{ route('family.create') }}">
 				{{ __('family/create.title') }}
 			</x-dropdown-link>
 			<div class="border-t border-gray-200"></div>

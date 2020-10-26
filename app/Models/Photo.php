@@ -7,6 +7,7 @@ use App\Models\Tag;
 use App\Traits\HasPhoto;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Photo extends Model
 {
@@ -37,6 +38,7 @@ class Photo extends Model
 		'name',
 		'path',
 		'signature',
+		'temp_path',
 	];
 
 	/**
@@ -58,6 +60,20 @@ class Photo extends Model
 	{
 		return Photo::where('signature', '=', $this->signature)->get();
 	}
+
+    /**
+     * Get the URL to a photo.
+     *
+     * @return string
+     */
+    public function getPhotoUrlAttribute()
+    {
+		if($this->temp_path !== null)
+		{
+			return Storage::disk('local')->url($this->temp_path);
+		}
+		return Storage::url($this->path);
+    }
 
 	/**
 	 * Whether this photo is a duplicate.

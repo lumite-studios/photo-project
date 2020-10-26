@@ -77,12 +77,12 @@ trait HasPhoto
     }
 
     /**
-     * Get the disk that profile photos should be stored on.
+     * Get the disk that photos should be stored on.
      *
      * @return string
      */
     protected function photoDisk()
     {
-        return isset($_ENV['VAPOR_ARTIFACT_NAME']) ? 's3' : 'public';
+		return config('filesystems.default');
     }
 }
