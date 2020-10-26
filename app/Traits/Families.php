@@ -57,7 +57,7 @@ trait Families
 
 	public function family()
 	{
-		return $this->families()->where('families.id', '=', $this->currentFamily->id)->first();
+		return $this->families()->where('families.id', '=', $this->current_family_id)->first();
 	}
 
 	/**

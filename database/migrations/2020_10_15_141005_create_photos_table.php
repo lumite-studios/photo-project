@@ -25,7 +25,8 @@ class CreatePhotosTable extends Migration
 
 			$table->foreign('album_id')
                 ->references('id')
-                ->on('albums');
+                ->on('albums')
+                ->onDelete('cascade');
         });
     }
 

@@ -6,6 +6,8 @@ use Livewire\Component;
 
 class IndexController extends Component
 {
+	public $family;
+
 	/**
 	 * The form state.
 	 * @var array
@@ -18,7 +20,7 @@ class IndexController extends Component
 	 * The users in this family.
 	 * @var Collection
 	 */
-	public $users;
+	public $users = [];
 
 	/**
 	 * The rules for the properties.
@@ -38,17 +40,21 @@ class IndexController extends Component
 	 */
 	public function mount()
 	{
-		$this->state['name'] = auth()->user()->currentFamily->name;
-		$this->users = auth()->user()->currentFamily->users->map(function($user)
+		$this->family = auth()->user()->currentFamily;
+		if($this->family !== null)
 		{
-			$user['admin'] = $user->canAdmin();
-			$user['view'] = $user->canView();
-			$user['invite'] = $user->canInvite();
-			$user['upload'] = $user->canUpload();
-			$user['edit'] = $user->canEdit();
-			$user['delete'] = $user->canDelete();
-			return $user;
-		});
+			$this->state['name'] = $this->family->name;
+			$this->users = $this->family->users->map(function($user)
+			{
+				$user['admin'] = $user->canAdmin();
+				$user['view'] = $user->canView();
+				$user['invite'] = $user->canInvite();
+				$user['upload'] = $user->canUpload();
+				$user['edit'] = $user->canEdit();
+				$user['delete'] = $user->canDelete();
+				return $user;
+			});
+		}
 	}
 
 	/**
@@ -101,6 +107,28 @@ class IndexController extends Component
 			$_user['admin'] ? $user->setPermission('admin') : $user->unsetPermission('admin');
 
 			$this->emit('toast', __('family/index.text.success-edit'), 'success');
+		}
+	}
+
+	/**
+	 * Delete a family.
+	 */
+	public function delete()
+	{
+		if(auth()->user()->canDelete())
+		{
+			$family = $this->family;
+
+			foreach($family->users as $user)
+			{
+				$user->current_family_id = null;
+				$user->save();
+			}
+
+			$family->delete();
+			$this->skipRender();
+
+			return redirect()->route('dashboard');
 		}
 	}
 }
