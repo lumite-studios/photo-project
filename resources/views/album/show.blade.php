@@ -79,7 +79,7 @@
 			</x-secondary-button>
 		@endif
 		@if($canUpload)
-			<x-button class="rounded-l-none" wire:click="toggleUploadingPhotosModal()">
+			<x-button class="{{ $canEdit ? 'rounded-l-none' : null }}" wire:click="toggleUploadingPhotosModal()">
 				{{ __('album/show.links.upload-photos') }}
 			</x-button>
 		@endif
