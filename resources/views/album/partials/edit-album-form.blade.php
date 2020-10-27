@@ -36,7 +36,7 @@
 
 	@if(auth()->user()->canDelete())
 		<!-- danger zone -->
-		<x-form-section submit="delete">
+		<x-form-section>
 			<x-slot name="title"><span class="text-red-500">{{ __('album/show.form.edit-album.danger-zone.section.title') }}</span></x-slot>
 			<x-slot name="description"><span class="text-red-600">{{ __('album/show.form.edit-album.danger-zone.section.description') }}</span></x-slot>
 			<x-slot name="form">
@@ -45,7 +45,7 @@
 					<x-button disabled wire:loading wire:target="delete">
 						<em class="fas fa-circle-notch fa-spin"></em>
 					</x-button>
-					<x-danger-button wire:loading.remove wire:target="delete">
+					<x-danger-button wire:loading.remove wire:click="delete" wire:target="delete">
 						{{ __('album/show.form.edit-album.danger-zone.delete-album.submit') }}
 					</x-danger-button>
 				</div>
