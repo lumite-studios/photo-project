@@ -84,19 +84,22 @@ class ShowController extends Component
 	 */
 	public function update()
 	{
-		$this->validate([
-			'state' => ['array', 'required'],
-			'state.cover_photo' => ['boolean', 'required'],
-		]);
-
-		if($this->state['cover_photo'])
+		if(auth()->user()->canEdit())
 		{
-			$this->member->cover_photo_path = $this->viewPhoto->path;
-			$this->member->save();
-		}
+			$this->validate([
+				'state' => ['array', 'required'],
+				'state.cover_photo' => ['boolean', 'required'],
+			]);
 
-		$this->emit('toast', __('member/show.text.updated-member'), 'success');
-		$this->clearState();
+			if($this->state['cover_photo'])
+			{
+				$this->member->cover_photo_path = $this->viewPhoto->path;
+				$this->member->save();
+			}
+
+			$this->emit('toast', __('member/show.text.updated-member'), 'success');
+			$this->clearState();
+		}
 	}
 
 	/**

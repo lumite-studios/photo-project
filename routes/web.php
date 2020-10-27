@@ -42,26 +42,26 @@ Route::group(['as' => 'auth.', 'middleware' => 'guest'], function() {
 // auth
 Route::group(['middleware' => 'auth'], function() {
 	// dashboard
-	Route::get('/dashboard', DashboardIndexController::class)->name('dashboard');
+	Route::get('/dashboard', DashboardIndexController::class)->middleware(['has-permission:view'])->name('dashboard');
 	// logout
 	Route::post('/logout', [LoginController::class, 'delete'])->name('logout');
 	// family
 	Route::group(['as' => 'family.', 'prefix' => 'family'], function() {
-		Route::get('/', FamilyIndexController::class)->name('index');
+		Route::get('/', FamilyIndexController::class)->middleware(['has-permission:admin'])->name('index');
 		Route::get('/create', FamilyCreateController::class)->name('create');
 		Route::patch('/{family_id}', [FamilyUpdateController::class, 'update'])->name('update');
 	});
 	// album
 	Route::group(['as' => 'album.', 'prefix' => 'album'], function() {
-		Route::get('/', AlbumIndexController::class)->name('index');
-		Route::get('/create', AlbumCreateController::class)->name('create');
-		Route::get('/{album_slug}', AlbumShowController::class)->name('show');
+		Route::get('/', AlbumIndexController::class)->middleware(['has-permission:view'])->name('index');
+		Route::get('/create', AlbumCreateController::class)->middleware(['has-permission:upload'])->name('create');
+		Route::get('/{album_slug}', AlbumShowController::class)->middleware(['has-permission:view'])->name('show');
 	});
 	// member
 	Route::group(['as' => 'member.', 'prefix' => 'member'], function() {
-		Route::get('/', MemberIndexController::class)->name('index');
-		Route::get('/create', MemberCreateController::class)->name('create');
-		Route::get('/{member_id}', MemberShowController::class)->name('show');
+		Route::get('/', MemberIndexController::class)->middleware(['has-permission:view'])->name('index');
+		Route::get('/create', MemberCreateController::class)->middleware(['has-permission:upload'])->name('create');
+		Route::get('/{member_id}', MemberShowController::class)->middleware(['has-permission:view'])->name('show');
 	});
 });
 

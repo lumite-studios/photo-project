@@ -46,16 +46,19 @@ class EditMemberForm extends Component
 	 */
 	public function update()
 	{
-		$this->validate([
-			'state' => ['array', 'required'],
-			'state.name' => ['required', 'string'],
-		]);
+		if(auth()->user()->canEdit())
+		{
+			$this->validate([
+				'state' => ['array', 'required'],
+				'state.name' => ['required', 'string'],
+			]);
 
-		$this->member->name = $this->state['name'];
-		$this->member->save();
+			$this->member->name = $this->state['name'];
+			$this->member->save();
 
-		$this->emit('toast', __('member/show.text.updated-member'), 'success');
-		$this->emit('refreshMember');
+			$this->emit('toast', __('member/show.text.updated-member'), 'success');
+			$this->emit('refreshMember');
+		}
 	}
 
 	/**
@@ -63,8 +66,11 @@ class EditMemberForm extends Component
 	 */
 	public function delete()
 	{
-		Member::where('id', '=', $this->member->id)->first()->delete();
-		$this->emit('toast', __('member/show.text.deleted-member'), 'success');
-		return redirect()->route('member.index');
+		if(auth()->user()->canDelete())
+		{
+			Member::where('id', '=', $this->member->id)->first()->delete();
+			$this->emit('toast', __('member/show.text.deleted-member'), 'success');
+			return redirect()->route('member.index');
+		}
 	}
 }

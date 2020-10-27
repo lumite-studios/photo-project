@@ -15,9 +15,11 @@
 		</x-card>
 	@else
 		<!-- options -->
-		<div class="flex justify-end mb-5 px-6 sm:px-0">
-			<a href="{{ route('album.create') }}"><x-button>{{ __('album/create.title') }}</x-button></a>
-		</div>
+		@if(auth()->user()->canUpload())
+			<div class="flex justify-end mb-5 px-6 sm:px-0">
+				<a href="{{ route('album.create') }}"><x-button>{{ __('album/create.title') }}</x-button></a>
+			</div>
+		@endif
 		<!-- list -->
 		<div class="gap-5 grid grid-cols-2 md:grid-cols-4">
 			@foreach($this->albums as $album)

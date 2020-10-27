@@ -29,7 +29,7 @@ return [
 				'duplicate_check' =>
 				[
 					'title' => 'Duplicate Check',
-					'description' => 'Whether to automatically check for duplicates when uploading photos. Depending on the number of photos in the album, this could take some time. Instead of being done when uploading it is possible to run a full check, of every photo, within the album itself at any point.',
+					'description' => 'Whether to automatically check for duplicates when uploading photos.',
 				],
 				'name' => 'Name',
 				'submit' => 'Update',

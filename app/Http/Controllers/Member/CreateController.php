@@ -30,17 +30,20 @@ class CreateController extends Component
 	 */
 	public function create()
 	{
-		$this->validate([
-			'state' => ['array', 'required'],
-			'state.name' => ['max:255', 'required', 'string'],
-		]);
+		if(auth()->user()->canUpload())
+		{
+			$this->validate([
+				'state' => ['array', 'required'],
+				'state.name' => ['max:255', 'required', 'string'],
+			]);
 
-		$member = auth()->user()->currentFamily->members()->create([
-			'name' => $this->state['name'],
-		]);
+			$member = auth()->user()->currentFamily->members()->create([
+				'name' => $this->state['name'],
+			]);
 
-		$this->emit('toast', __('member/create.text.created'), 'success');
+			$this->emit('toast', __('member/create.text.created'), 'success');
 
-		return redirect()->route('member.show', ['member_id' => $member->id]);
+			return redirect()->route('member.show', ['member_id' => $member->id]);
+		}
 	}
 }

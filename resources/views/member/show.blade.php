@@ -22,7 +22,7 @@
 		<div class="flex-grow"></div>
 	</div>
 
-	@if($this->hasPhotos)
+	@if(auth()->user()->canEdit())
 		<div class="flex justify-end">
 			<a href="#edit-member-form">{{ __('member/show.links.jump-to') }}</a>
 		</div>
@@ -64,7 +64,7 @@
 		</x-secondary-button>
 	@endif
 
-	@if(auth()->user()->canEdit())
+	@if(auth()->user()->canEdit() || auth()->user()->canDelete())
 		<hr class="my-10" />
 		<div id="edit-member-form">
 			@livewire('member.partials.edit-member-form', ['member' => $member])
@@ -96,16 +96,20 @@
 						<div class="italic mt-3 text-center text-gray-500 text-sm">{{ $viewPhoto->description }}</div>
 					@endif
 				</div>
-				<!-- cover photo -->
-				<div class="text-center">
-					<input name="cover_photo" type="checkbox" wire:model="state.cover_photo" />
-					<x-label for="cover_photo">{{ __('member/show.form.edit-photo.cover_photo') }}</x-label>
-					<x-input-error for="state.cover_photo" />
-				</div>
+				@if(auth()->user()->canEdit())
+					<!-- cover photo -->
+					<div class="text-center">
+						<input name="cover_photo" type="checkbox" wire:model="state.cover_photo" />
+						<x-label for="cover_photo">{{ __('member/show.form.edit-photo.cover_photo') }}</x-label>
+						<x-input-error for="state.cover_photo" />
+					</div>
+				@endif
 			</x-slot>
-			<x-slot name="footer">
-				<x-button wire:click="update">{{ __('member/show.form.edit-photo.submit') }}</x-button>
-			</x-slot>
+			@if(auth()->user()->canEdit())
+				<x-slot name="footer">
+					<x-button wire:click="update">{{ __('member/show.form.edit-photo.submit') }}</x-button>
+				</x-slot>
+			@endif
 		@endif
 	</x-dialog-modal>
 </div>
