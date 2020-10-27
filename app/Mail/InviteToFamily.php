@@ -34,10 +34,10 @@ class InviteToFamily extends Mailable
      *
      * @return void
      */
-    public function __construct(string $family, string $code)
+    public function __construct(string $family, string $code, string $email)
     {
 		$this->code = $code;
-		$this->email = array_key_exists(0, $this->to) ? $this->to[0] : null;
+		$this->email = $email;
         $this->family = $family;
     }
 

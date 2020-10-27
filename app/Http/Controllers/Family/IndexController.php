@@ -166,7 +166,7 @@ class IndexController extends Component
 			'permissions' => $permissions,
 		]);
 
-		Mail::to($this->state['invite'])->send(new InviteToFamily($this->family->name, $code));
+		Mail::to($this->state['invite']['name'])->send(new InviteToFamily($this->family->name, $code, $this->state['invite']['name']));
 
 		$this->clearState();
 		$this->family->refresh();
