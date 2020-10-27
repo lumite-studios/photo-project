@@ -50,7 +50,7 @@ class EditPhotoModal extends Component
 	public function mount()
 	{
 		$this->clearState();
-		$this->members = Member::all();
+		$this->members = Member::where('family_id', '=', auth()->user()->currentFamily->id)->orderBy('updated_at', 'DESC')->get();
 	}
 
 	/**
