@@ -85,7 +85,7 @@ class CreateController extends Component
 		$family->users()->attach(auth()->user()->id, ['permissions' => json_encode(['*'])]);
 
 		// create the default "Unsorted" album
-		$family->albums()->create([
+		$album = $family->albums()->create([
 			'name' => __('family/create.text.unsorted.name'),
 			'slug' => null,
 			'description' => __('family/create.text.unsorted.description'),
@@ -93,6 +93,8 @@ class CreateController extends Component
 			'editable' => false,
 			'duplicate_check' => false,
 		]);
+		$album->slug = $album->id.'-'.Str::slug($album->name);
+		$album->save();
 
 		foreach($this->state['invites'] as $email)
 		{

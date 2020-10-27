@@ -19,7 +19,7 @@ class FixUnsorted extends Seeder
 
 		foreach($albums as $album)
 		{
-			$album->slug = Str::slug($album->name);
+			$album->slug = $album->id.'-'.Str::slug($album->name);
 			$album->save();
 		}
     }
