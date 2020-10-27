@@ -140,7 +140,7 @@ class IndexController extends Component
 	{
 		$this->invites = $this->family->invites->map(function($value)
 		{
-			return $value->email;
+			return ['email' => $value->email, 'code' => $value->code];
 		});
 	}
 

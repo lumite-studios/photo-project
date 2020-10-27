@@ -114,10 +114,10 @@
 				@if(count($invites) !== 0)
 					@foreach($invites as $invite)
 						<div class="flex items-center space-x-3">
-							<button class="cursor-pointer font-bold text-red-500" wire:click.prevent="removeInvite('{{ $invite }}')">
+							<button class="cursor-pointer font-bold text-red-500" wire:click.prevent="removeInvite('{{ $invite['email'] }}')">
 								<em class="fas fa-times"></em>
 							</button>
-							<div class="flex-grow text-gray-600 text-sm">{{ $invite }}</div>
+							<div class="flex-grow text-gray-600 text-sm">{{ $invite['email'] }} - {{ $invite['code'] }}</div>
 						</div>
 					@endforeach
 				@else
