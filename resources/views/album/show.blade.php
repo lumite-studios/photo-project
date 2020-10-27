@@ -66,7 +66,7 @@
 		</div>
 		<div class="flex-grow"></div>
 		<!-- options -->
-		@if($canEdit)
+		@if(auth()->user()->canEdit())
 			<x-secondary-button class="{{ $canUpload ? 'rounded-r-none' : null }}" wire:click="toggleEditing" wire:target="toggleEditing" wire:loading.attr="disabled">
 				<span wire:loading wire:target="toggleEditing"><em class="fas fa-circle-notch fa-spin"></em></span>
 				<span wire:loading.remove wire:target="toggleEditing">
@@ -86,7 +86,7 @@
 	</div>
 
 	<!-- view -->
-	@if($editing && $canEdit)
+	@if($editing && auth()->user()->canEdit())
 		@livewire('album.partials.edit-album', ['album' => $album])
 	@else
 		@livewire('album.partials.view-album', ['album' => $album])
