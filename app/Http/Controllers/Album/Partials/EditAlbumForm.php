@@ -65,6 +65,7 @@ class EditAlbumForm extends Component
 			$this->album->save();
 
 			$this->emit('refreshAlbum');
+			$this->emit('toast', 'Successfully edited album!', 'success');
 		}
 	}
 
