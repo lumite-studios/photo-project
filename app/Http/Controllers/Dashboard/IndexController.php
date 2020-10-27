@@ -11,6 +11,8 @@ class IndexController extends Component
 	 */
 	public $albums = [];
 
+	public $amount = 8;
+
 	/**
 	 * Whether the auth user has a family.
 	 * @var boolean
@@ -31,8 +33,8 @@ class IndexController extends Component
 		if(auth()->user()->hasFamily())
 		{
 			$this->hasFamily = true;
-			$this->albums = auth()->user()->currentFamily->albumsWithOptionalUnsorted()->orderBy('updated_at', 'DESC')->take(4)->get();
-			$this->members = auth()->user()->currentFamily->members()->orderBy('updated_at', 'DESC')->take(4)->get();
+			$this->albums = auth()->user()->currentFamily->albumsWithOptionalUnsorted()->orderBy('updated_at', 'DESC')->take($this->amount)->get();
+			$this->members = auth()->user()->currentFamily->members()->orderBy('updated_at', 'DESC')->take($this->amount)->get();
 		} else
 		{
 			$this->hasFamily = false;

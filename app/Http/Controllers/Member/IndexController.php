@@ -12,7 +12,7 @@ class IndexController extends Component
 	 * The amount to paginate by.
 	 * @var integer
 	 */
-	private $amount = 8;
+	private $amount = 16;
 
 	/**
 	 * Render the livewire component.
