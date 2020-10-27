@@ -17,8 +17,8 @@ trait DisplayPhotosOptions
 			'options' => ['none', 'move', 'delete']
 		],
 		'sort' => [
-			'value' => '>',
-			'options' => ['>' => 'newest', '<' => 'oldest']
+			'value' => '<',
+			'options' => ['<' => 'oldest'] // removed "'>' => 'newest'" due to bug with load more
 		],
 	];
 }

@@ -20,7 +20,7 @@ return [
 				'invites' => [
 					'none' => 'No Invites',
 					'placeholder' => '',
-					'submit' => 'Add',
+					'submit' => 'Send',
 					'title' => 'Invites',
 				],
 				'name' => 'Name',

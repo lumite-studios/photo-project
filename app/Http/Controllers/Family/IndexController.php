@@ -17,10 +17,7 @@ class IndexController extends Component
 	 * The form state.
 	 * @var array
 	 */
-	public $state = [
-		'invite' => null,
-		'name' => null,
-	];
+	public $state = [];
 
 	/**
 	 * The users in this family.
@@ -48,7 +45,7 @@ class IndexController extends Component
 	{
 		$this->family = auth()->user()->currentFamily;
 		$this->setInvites();
-		$this->state['name'] = $this->family->name;
+		$this->clearState();
 		$this->users = $this->family->users->map(function($user)
 		{
 			$user['admin'] = $user->canAdmin();
@@ -152,21 +149,26 @@ class IndexController extends Component
 	 */
 	public function sendInvite()
 	{
-		if($this->family->invites()->where('email', '=', $this->state['invite'])->first())
+		if($this->family->invites()->where('email', '=', $this->state['invite']['name'])->first() || $this->family->users()->where('email_address', '=', $this->state['invite']['name'])->first())
 		{
 			$this->emit('toast', __('family/index.text.error-invite'), 'error');
 			return;
 		}
 
+		$permissions = collect($this->state['invite'])->filter(function($value, $key) {
+			return $value === true;
+		})->keys()->toJson();
+
 		$code = Str::random(15);
 		$this->family->invites()->create([
-			'email' => $this->state['invite'],
+			'email' => $this->state['invite']['name'],
 			'code' => $code,
+			'permissions' => $permissions,
 		]);
 
 		Mail::to($this->state['invite'])->send(new InviteToFamily($this->family->name, $code));
 
-		$this->state['invite'] = null;
+		$this->clearState();
 		$this->family->refresh();
 		$this->setInvites();
 	}
@@ -184,5 +186,24 @@ class IndexController extends Component
 		$this->family->refresh();
 		$this->setInvites();
 		$this->emit('toast', 'Deleted Invite', 'success');
+	}
+
+	/**
+	 * Clear the state.
+	 */
+	private function clearState()
+	{
+		$this->state = [
+			'invite' => [
+				'name' => null,
+				'view' => true,
+				'invite' => false,
+				'upload' => true,
+				'edit' => true,
+				'delete' => true,
+				'admin' => false,
+			],
+			'name' => $this->family->name,
+		];
 	}
 }
