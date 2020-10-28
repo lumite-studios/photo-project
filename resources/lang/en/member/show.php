@@ -19,6 +19,7 @@ return [
 					'description' => 'Change the details of the member.',
 					'title' => 'Member Details',
 				],
+				'description' => 'Description',
 				'name' => 'Name',
 				'submit' => 'Update',
 			],

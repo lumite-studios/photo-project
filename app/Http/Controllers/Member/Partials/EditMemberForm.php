@@ -30,6 +30,7 @@ class EditMemberForm extends Component
 		$this->member = $member;
 		$this->state = [
 			'name' => $this->member->name,
+			'description' => $this->member->description,
 		];
 	}
 
@@ -51,9 +52,11 @@ class EditMemberForm extends Component
 			$this->validate([
 				'state' => ['array', 'required'],
 				'state.name' => ['required', 'string'],
+				'state.description' => ['nullable', 'string'],
 			]);
 
 			$this->member->name = $this->state['name'];
+			$this->member->description = $this->state['description'];
 			$this->member->save();
 
 			$this->emit('toast', __('member/show.text.updated-member'), 'success');

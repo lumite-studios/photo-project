@@ -34,6 +34,7 @@
 							<div class="flex-grow font-bold text-xl">{{ $member->name }}</div>
 							<div>{{ $member->photos->count() }}</div>
 						</h3>
+						<div class="text-gray-500 text-sm">{{ $member->description }}</div>
 					</x-slot>
 				</x-card>
 			@endforeach

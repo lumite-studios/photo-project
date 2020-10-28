@@ -11,6 +11,12 @@
 					<x-input name="name" type="text" wire:model.defer="state.name" />
 					<x-input-error for="state.name" class="mt-2" />
 				</div>
+				<!-- description -->
+				<div class="mb-3">
+					<x-label for="description">{{ __('member/show.form.edit-member.details.description') }}</x-label>
+					<x-input name="description" type="text" wire:model.defer="state.description" />
+					<x-input-error for="state.description" class="mt-2" />
+				</div>
 			</x-slot>
 			<x-slot name="actions">
 				<x-button disabled wire:loading wire:target="update">

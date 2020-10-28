@@ -61,7 +61,7 @@ class ShowController extends Component
         return view('member.show')
 			->layout('layouts.app', [
 				'title' => __('member/show.title').$this->member->name,
-				'subtitle' => __('member/show.text.subtitle'),
+				'subtitle' => $this->member->description != null ? $this->member->description : __('member/show.text.subtitle'),
 			]);
 	}
 
