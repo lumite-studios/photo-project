@@ -25,6 +25,8 @@ class Member extends Model
 	 */
 	protected $photoFolder = null;
 
+	protected $dates = ['birthday'];
+
 	/**
 	 * The attributes that are mass assignable.
 	 *

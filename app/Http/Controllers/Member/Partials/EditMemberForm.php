@@ -31,6 +31,9 @@ class EditMemberForm extends Component
 		$this->state = [
 			'name' => $this->member->name,
 			'description' => $this->member->description,
+			'birthday' => $this->member->birthday,
+			'mother' => null,
+			'father' => null,
 		];
 	}
 
@@ -53,10 +56,12 @@ class EditMemberForm extends Component
 				'state' => ['array', 'required'],
 				'state.name' => ['required', 'string'],
 				'state.description' => ['nullable', 'string'],
+				'state.birthday' => ['date', 'nullable'],
 			]);
 
 			$this->member->name = $this->state['name'];
 			$this->member->description = $this->state['description'];
+			$this->member->birthday = $this->state['birthday'];
 			$this->member->save();
 
 			$this->emit('toast', __('member/show.text.updated-member'), 'success');

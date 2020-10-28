@@ -34,7 +34,10 @@
 							<div class="flex-grow font-bold text-xl">{{ $member->name }}</div>
 							<div>{{ $member->photos->count() }}</div>
 						</h3>
-						<div class="text-gray-500 text-sm">{{ $member->description }}</div>
+						<div class="text-gray-500 text-sm">
+							<div><strong>{{ __('member/show.form.edit-member.details.birthday') }}:</strong> {{ $member->birthday->format('jS F Y') }}</div>
+							<div>{{ $member->description }}</div>
+						</div>
 					</x-slot>
 				</x-card>
 			@endforeach
