@@ -9,6 +9,13 @@ trait DisplayPhotos
 	use DisplayPhotosOptions;
 
 	/**
+	 * Whether to use the "Load More" functionality.
+	 * Currently has too many bugs.
+	 * @var boolean
+	 */
+	private $canLoadMore = false;
+
+	/**
 	 * The current count of photos.
 	 * @var integer
 	 */
@@ -83,11 +90,20 @@ trait DisplayPhotos
 			: Carbon::parse($last->date_taken)->addMonths($this->months)->toDateTimeString();
 
 		// get the photos
-		$this->_photos = $photos = $this->model->photos()
-					->orderBy('date_taken', $order)
-					->orderBy('id', $order)
-					->whereDate('date_taken', $sort, $next)
-					->get();
+		if($this->canLoadMore)
+		{
+			$this->_photos = $photos = $this->model->photos()
+						->orderBy('date_taken', $order)
+						->orderBy('id', $order)
+						->whereDate('date_taken', $sort, $next)
+						->get();
+		} else
+		{
+			$this->_photos = $photos = $this->model->photos()
+								->orderBy('date_taken', $order)
+								->orderBy('id', $order)
+								->get();
+		}
 
 		// update the current photos count
 		$this->count = $photos->count();

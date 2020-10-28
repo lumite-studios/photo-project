@@ -1,4 +1,3 @@
 add option to hide tags
 add search to albums and members
 add sort to albums and members
-for tag, show recent tagged people
