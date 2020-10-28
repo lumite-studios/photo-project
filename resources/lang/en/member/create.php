@@ -7,8 +7,11 @@ return [
 			'description' => 'Create a new member to tag in photos.',
 			'name' => 'Member Details',
 		],
-		'cover_photo' => 'Cover Photo',
 		'name' => 'Name',
+		'birthday' => 'Birthday',
+		'description' => 'Description',
+		'father' => 'Father',
+		'mother' => 'Mother',
 		'submit' => 'Create',
 	],
 

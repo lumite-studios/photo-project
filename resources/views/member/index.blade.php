@@ -35,7 +35,9 @@
 							<div>{{ $member->photos->count() }}</div>
 						</h3>
 						<div class="text-gray-500 text-sm">
-							<div><strong>{{ __('member/show.form.edit-member.details.birthday') }}:</strong> {{ $member->birthday !== null ? $member->birthday->format('jS F Y') : null }}</div>
+							@if($member->birthday !== null)
+								<div><strong>{{ __('member/create.form.birthday') }}:</strong> {{ $member->birthday->format('jS F Y') }}</div>
+							@endif
 							<div>{{ $member->description }}</div>
 						</div>
 					</x-slot>

@@ -14,6 +14,18 @@
 				<x-input id="name" type="text" wire:model.defer="state.name" autofocus />
 				<x-input-error for="state.name" class="mt-2" />
 			</div>
+			<!-- description -->
+			<div class="mb-3">
+				<x-label for="description">{{ __('member/create.form.description') }}</x-label>
+				<x-input name="description" type="text" wire:model.defer="state.description" />
+				<x-input-error for="state.description" class="mt-2" />
+			</div>
+			<!-- birthday -->
+			<div class="mb-3">
+				<x-label for="birthday">{{ __('member/create.form.birthday') }}</x-label>
+				<x-input name="birthday" type="date" wire:model.defer="state.birthday" placeholder="dd/mm/yyyy" />
+				<x-input-error for="state.birthday" class="mt-2" />
+			</div>
 		</x-slot>
 
 		<x-slot name="actions">

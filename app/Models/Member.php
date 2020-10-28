@@ -34,6 +34,7 @@ class Member extends Model
 	 */
 	protected $fillable =
 	[
+		'birthday',
 		'description',
 		'name',
 	];

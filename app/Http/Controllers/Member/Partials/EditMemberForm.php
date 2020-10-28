@@ -31,7 +31,7 @@ class EditMemberForm extends Component
 		$this->state = [
 			'name' => $this->member->name,
 			'description' => $this->member->description,
-			'birthday' => $this->member->birthday,
+			'birthday' => $this->member->birthday !== null ? $this->member->birthday->format('Y-m-d') : null,
 			'mother' => null,
 			'father' => null,
 		];

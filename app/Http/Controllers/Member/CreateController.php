@@ -10,7 +10,9 @@ class CreateController extends Component
 	 * @var array
 	 */
 	public $state = [
-		'name' => '',
+		'birthday' => null,
+		'description' => null,
+		'name' => null,
 	];
 
 	/**
@@ -35,10 +37,14 @@ class CreateController extends Component
 			$this->validate([
 				'state' => ['array', 'required'],
 				'state.name' => ['max:255', 'required', 'string'],
+				'state.description' => ['max:255', 'nullable', 'string'],
+				'state.birthday' => ['date', 'nullable'],
 			]);
 
 			$member = auth()->user()->currentFamily->members()->create([
 				'name' => $this->state['name'],
+				'description' => $this->state['description'],
+				'birthday' => $this->state['birthday'],
 			]);
 
 			$this->emit('toast', __('member/create.text.created'), 'success');

@@ -7,19 +7,19 @@
 			<x-slot name="form">
 				<!-- name -->
 				<div class="mb-3">
-					<x-label for="name">{{ __('member/show.form.edit-member.details.name') }}</x-label>
+					<x-label for="name">{{ __('member/create.form.name') }}</x-label>
 					<x-input name="name" type="text" wire:model.defer="state.name" />
 					<x-input-error for="state.name" class="mt-2" />
 				</div>
 				<!-- description -->
 				<div class="mb-3">
-					<x-label for="description">{{ __('member/show.form.edit-member.details.description') }}</x-label>
+					<x-label for="description">{{ __('member/create.form.description') }}</x-label>
 					<x-input name="description" type="text" wire:model.defer="state.description" />
 					<x-input-error for="state.description" class="mt-2" />
 				</div>
 				<!-- birthday -->
 				<div class="mb-3">
-					<x-label for="birthday">{{ __('member/show.form.edit-member.details.birthday') }}</x-label>
+					<x-label for="birthday">{{ __('member/create.form.birthday') }}</x-label>
 					<x-input name="birthday" type="date" wire:model.defer="state.birthday" placeholder="dd/mm/yyyy" />
 					<x-input-error for="state.birthday" class="mt-2" />
 				</div>
