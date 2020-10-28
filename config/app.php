@@ -17,7 +17,8 @@ return [
 	'initial_user_name' => env('INITIAL_USER_NAME'),
 	'initial_user_email' => env('INITIAL_USER_EMAIL'),
 	'initial_user_password' => env('INITIAL_USER_PASSWORD'),
-    'name' => env('APP_NAME', 'Laravel'),
+	'name' => env('APP_NAME', 'Laravel'),
+	'static_url' => env('STATIC_URL'),
 
     /*
     |--------------------------------------------------------------------------

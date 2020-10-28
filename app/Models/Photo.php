@@ -72,7 +72,7 @@ class Photo extends Model
 		{
 			return Storage::disk('local')->url($this->temp_path);
 		}
-		return Storage::url($this->path);
+		return config('app.static_url').'/'.$this->path;
     }
 
 	/**
