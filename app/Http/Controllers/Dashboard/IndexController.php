@@ -25,6 +25,8 @@ class IndexController extends Component
 	 */
 	public $members = [];
 
+	public $stats = [];
+
 	/**
 	 * Setup the components required data.
 	 */
@@ -35,6 +37,24 @@ class IndexController extends Component
 			$this->hasFamily = true;
 			$this->albums = auth()->user()->currentFamily->albumsWithOptionalUnsorted()->orderBy('updated_at', 'DESC')->take($this->amount)->get();
 			$this->members = auth()->user()->currentFamily->members()->orderBy('updated_at', 'DESC')->take($this->amount)->get();
+			$this->stats = [
+				'photos' => [
+					'amount' => auth()->user()->currentFamily->photos->count(),
+					'text' => 'Total Photos',
+				],
+				'albums' => [
+					'amount' => auth()->user()->currentFamily->albumsWithoutUnsorted->count(),
+					'text' => 'Total Albums',
+				],
+				'members' => [
+					'amount' => auth()->user()->currentFamily->members->count(),
+					'text' => 'Total Members',
+				],
+				'tags' => [
+					'amount' => auth()->user()->currentFamily->tags->count(),
+					'text' => 'Total Tags',
+				],
+			];
 		} else
 		{
 			$this->hasFamily = false;

@@ -4,6 +4,8 @@ namespace App\Models;
 use App\Models\Album;
 use App\Models\Invite;
 use App\Models\Member;
+use App\Models\Photo;
+use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -78,6 +80,16 @@ class Family extends Model
 	public function members()
 	{
 		return $this->hasMany(Member::class);
+	}
+
+	public function photos()
+	{
+		return $this->hasManyThrough(Photo::class, Album::class);
+	}
+
+	public function tags()
+	{
+		return $this->hasManyThrough(Tag::class, Member::class);
 	}
 
 	/**

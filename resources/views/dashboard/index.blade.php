@@ -1,6 +1,21 @@
 <div>
 	@if($hasFamily)
+		<!-- stats -->
+		<div class="gap-5 grid grid-cols-2 md:grid-cols-4">
+			@foreach($stats as $stat)
+				<x-card class="col-span-1">
+					<x-slot name="content">
+						<div class="text-center">
+							<div class="font-bold text-2xl">{{ $stat['amount'] }}</div>
+							<div class="text-gray-500 text-sm">{{ $stat['text'] }}</div>
+						</div>
+					</x-slot>
+				</x-card>
+			@endforeach
+		</div>
+
 		<!-- albums -->
+		<hr class="my-10" />
 		<div class="flex justify-end mb-5 px-6 sm:px-0">
 			<a href="{{ route('album.index') }}"><x-secondary-button class="{{ auth()->user()->canUpload() ? 'rounded-r-none' : null }}">{{ __('album/index.title') }}</x-secondary-button></a>
 			@if(auth()->user()->canUpload())
@@ -80,7 +95,12 @@
 								<div class="flex-grow font-bold text-xl">{{ $member->name }}</div>
 								<div>{{ $member->photos->count() }}</div>
 							</h3>
-							<div class="text-gray-500 text-sm">{{ $member->description }}</div>
+							<div class="text-gray-500 text-sm">
+								@if($member->birthday !== null)
+									<div><strong>{{ __('member/create.form.birthday') }}:</strong> {{ $member->birthday->format('jS F Y') }}</div>
+								@endif
+								{{ $member->description }}
+							</div>
 						</x-slot>
 					</x-card>
 				@endforeach
