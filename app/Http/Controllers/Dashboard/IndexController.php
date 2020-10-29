@@ -40,19 +40,19 @@ class IndexController extends Component
 			$this->stats = [
 				'photos' => [
 					'amount' => auth()->user()->currentFamily->photos->count(),
-					'text' => 'Total Photos',
+					'text' => __('dashboard/index.text.stats.photos'),
 				],
 				'albums' => [
 					'amount' => auth()->user()->currentFamily->albumsWithoutUnsorted->count(),
-					'text' => 'Total Albums',
+					'text' => __('dashboard/index.text.stats.albums'),
 				],
 				'members' => [
 					'amount' => auth()->user()->currentFamily->members->count(),
-					'text' => 'Total Members',
+					'text' => __('dashboard/index.text.stats.members'),
 				],
 				'tags' => [
 					'amount' => auth()->user()->currentFamily->tags->count(),
-					'text' => 'Total Tags',
+					'text' => __('dashboard/index.text.stats.tags'),
 				],
 			];
 		} else
