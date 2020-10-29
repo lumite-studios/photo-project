@@ -1,13 +1,12 @@
 <div>
 	@if($hasFamily)
-		<!-- options -->
+		<!-- albums -->
 		<div class="flex justify-end mb-5 px-6 sm:px-0">
 			<a href="{{ route('album.index') }}"><x-secondary-button class="{{ auth()->user()->canUpload() ? 'rounded-r-none' : null }}">{{ __('album/index.title') }}</x-secondary-button></a>
 			@if(auth()->user()->canUpload())
 				<a href="{{ route('album.create') }}"><x-button class="rounded-l-none">{{ __('album/create.title') }}</x-button></a>
 			@endif
 		</div>
-		<!-- albums -->
 		@if($albums->count() === 0)
 			<x-card>
 				<x-slot name="content">
@@ -43,14 +42,15 @@
 				@endforeach
 			</div>
 		@endif
-		<!-- options -->
+
+		<!-- members -->
+		<hr class="my-10" />
 		<div class="flex justify-end my-5 px-6 sm:px-0">
 			<a href="{{ route('member.index') }}"><x-secondary-button class="{{ auth()->user()->canUpload() ? 'rounded-r-none' : null }}">{{ __('member/index.title') }}</x-secondary-button></a>
 			@if(auth()->user()->canUpload())
 				<a href="{{ route('member.create') }}"><x-button class="rounded-l-none">{{ __('member/create.title') }}</x-button></a>
 			@endif
 		</div>
-		<!-- members -->
 		@if($members->count() === 0)
 			<x-card>
 				<x-slot name="content">
